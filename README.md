@@ -26,16 +26,20 @@
     		Muy util para ver informacion de las redes a tu alrededores informacion la cual no siempre esta disponible y que es muy util a la hora de analisis y implementacion de otras redes o proyectos!
 
     		Este monitor de redes inalambricas, puedes ver la siguientes variables sobre las redes de tualrededor como:
-    		- SSID, BSSID, SEÑAL, CANAL, FRECUENCIA, BANDA, SEGURIDAD, DE LOS EQUIPOS "MODEM's-HOME".
-    		- A la hora de implementar una red wireless puedes analizar que canales estan mas congestinados, realizando un escaneo el cual depende de las caracteristicas de tu tarjeta de red en tu equipo host!
-    		- Opciones de filtros basados en todos los datos obtenidos.
-    		![ICONO]("")
-    		- Opciones de escaneo:
-    		![ICONO]("")
-    		- Opciones de tratado de datos:
-    		![ICONO]("")
-    		- Panel OutPut:
-    		![ICONO]("")
+   		- SSID, BSSID, SEÑAL, CANAL, FRECUENCIA, BANDA, SEGURIDAD, DE LOS EQUIPOS "MODEM's-HOME".
+   		- A la hora de implementar una red wireless puedes analizar que canales estan mas congestinados, realizando un escaneo el cual depende de las caracteristicas de tu tarjeta de red en tu equipo host!
+   		- Barra superior con botones de funciones!
+   		- Barra inferior con muestra de informacion importante y util sobre tu conexion actual, fecha y hora, muy completa!
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/w_4.PNG)
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/w_5.PNG)
+   		- Opciones de filtros basados en todos los datos obtenidos.
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/w_3.PNG)
+   		- Opciones de escaneo:
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/w_1.PNG)
+   		- Opciones de tratado de datos:
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/w_2.PNG)
+   		- Panel OutPut:
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/1.PNG)
 
 
 # Notas:
