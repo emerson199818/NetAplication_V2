@@ -31,13 +31,16 @@
    		- Barra superior con botones de funciones!
    		- Barra inferior con muestra de informacion importante y util sobre tu conexion actual, fecha y hora, muy completa!
    ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/w_4.PNG)
-   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/w_5.PNG)
+   
    		- Opciones de filtros basados en todos los datos obtenidos.
    ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/w_3.PNG)
+   
    		- Opciones de escaneo:
    ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/w_1.PNG)
+   
    		- Opciones de tratado de datos:
    ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/w_2.PNG)
+   
    		- Panel OutPut:
    ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/1.PNG)
 
