@@ -1,0 +1,49 @@
+import scapy.all as scapy
+import socket
+import ipaddress
+
+def get_local_ip():
+    # Obtiene la dirección IP local del equipo
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    local_ip = s.getsockname()[0]
+    s.close()
+    return local_ip
+
+def get_device_name(ip):
+    try:
+        # Realiza la resolución de nombres
+        device_name, _, _ = socket.gethostbyaddr(ip)
+        return device_name
+    except socket.herror:
+        # No se pudo resolver el nombre
+        return None
+
+def scan(ip):
+    arp_request = scapy.ARP(pdst=ip)
+    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
+    arp_request_broadcast = broadcast/arp_request
+    answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
+    
+    clients_list = []
+    for element in answered_list:
+        client_dict = {"ip": element[1].psrc, "mac": element[1].hwsrc}
+        clients_list.append(client_dict)
+    return clients_list
+
+def main():
+    local_ip = get_local_ip()
+    network_ip = f"{ipaddress.IPv4Network(local_ip, strict=False).network_address}/24"
+    
+    result = scan(network_ip)
+    
+    if result:
+        print("IP, MAC y Nombre de dispositivo en la red:")
+        for client in result:
+            device_name = get_device_name(client['ip'])
+            print(f"IP: {client['ip']}, MAC: {client['mac']}, Nombre: {device_name}")
+    else:
+        print("No se pudieron obtener las IP, MAC y Nombres de dispositivo.")
+
+if __name__ == "__main__":
+    main()
