@@ -12,9 +12,9 @@
 
     Monitores:
     	Wireless Monitor:
-    		Muy util para ver informacion de las redes a tu alrededores informacion la cual no siempre esta disponible y que es muy util a la hora de analisis y implementacion de otras redes o proyectos!
+    	Muy util para ver informacion de las redes a tu alrededores informacion la cual no siempre esta disponible y que es muy util a la hora de analisis y implementacion de otras redes o proyectos!
 
-    		Este monitor de redes inalambricas, puedes ver la siguientes variables sobre las redes de tualrededor como:
+    	Este monitor de redes inalambricas, puedes ver la siguientes variables sobre las redes de tualrededor como:
    		- SSID, BSSID, SEÑAL, CANAL, FRECUENCIA, BANDA, SEGURIDAD, DE LOS EQUIPOS "MODEM's-HOME".
    		- A la hora de implementar una red wireless puedes analizar que canales estan mas congestinados, realizando un escaneo el cual depende de las caracteristicas de tu tarjeta de red en tu equipo host!
    		- Barra superior con botones de funciones!
