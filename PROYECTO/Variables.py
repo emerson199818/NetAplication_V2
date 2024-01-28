@@ -1,4 +1,5 @@
 import tkinter as tk #modulo para la creacion de ventanas y frames widgets
+from tkinter import font
 import ctypes
 from datetime import datetime
 import os
@@ -51,6 +52,7 @@ icono_help = "lib/data/help.png" #icono del boton informativo help
 #Variables datos de usuario del equipo
 Host_nombre = socket.gethostname()
 nombre_usuario = getpass.getuser()
+host_y_usuario = f"{Host_nombre} / {nombre_usuario}"
 ruta_escritorio = os.path.join(os.path.expanduser("~"), "Desktop")
 
 #Variables archivos
@@ -87,3 +89,8 @@ v_señal = ""
 v_recuento = 0 #guarda el recuento de todas las redes escaneada del documento!
 treeview_recuento = 0 #guarda el recuento de datos en el treeview
 selecion_recuento = 0
+
+# fuente
+ruta_fuente = "lib/Data/fuente/poppins.ttf" # ruta de la fuente poppins
+poppins_negrita = font.Font(family="Popins", weight="bold")
+poppins = font.Font(family="Popins")

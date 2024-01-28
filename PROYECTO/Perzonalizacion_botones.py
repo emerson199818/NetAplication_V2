@@ -10,11 +10,11 @@ def selecion_boton(self): #efecto al selecionar boton
     self.bind("<Leave>", lambda event: self.config(bg=Variables.c_barras))
 
 #Botones informativos
-def boton_ayuda(selft, texto_tooltip, coord_x, coord_y):#boton ayuda informativo derecha
+def boton_ayuda(color, selft, texto_tooltip, coord_x, coord_y):#boton ayuda informativo derecha
     imagen = Image.open(Variables.icono_help) # reemplaza esto con la ruta a tu imagen
     imagen = imagen.resize((15, 15), Image.LANCZOS) # Ajustar el tamaño de la imagen
     imagen_tk = ImageTk.PhotoImage(imagen) # Convertir la imagen a un formato que Tkinter pueda usar
-    boton_help = tk.Label(selft, image=imagen_tk, bg=Variables.c_centros) # Crear el botón con la imagen ajustada
+    boton_help = tk.Label(selft, image=imagen_tk, bg=color) # Crear el botón con la imagen ajustada
     boton_help.image = imagen_tk # mantener una referencia a la imagen
     boton_help.place(x=coord_x, y=coord_y) # ajusta las coordenadas x e y
     ToolTip(boton_help, texto_tooltip) # Crear el tooltip para el botón
@@ -41,11 +41,11 @@ class ToolTip(object): #tooltip del boton_ayuda informativo derecha
         if self.tw:
             self.tw.destroy()
 
-def boton_ayuda_izquierda(selft, texto_tooltip, coord_x, coord_y): #boton ayuda informativo izquierda
+def boton_ayuda_izquierda(color, selft, texto_tooltip, coord_x, coord_y): #boton ayuda informativo izquierda
     imagen = Image.open(Variables.icono_help) # reemplaza esto con la ruta a tu imagen
     imagen = imagen.resize((15, 15), Image.LANCZOS) # Ajustar el tamaño de la imagen
     imagen_tk = ImageTk.PhotoImage(imagen) # Convertir la imagen a un formato que Tkinter pueda usar
-    boton_help = tk.Label(selft, image=imagen_tk, bg=Variables.c_centros) # Crear el botón con la imagen ajustada
+    boton_help = tk.Label(selft, image=imagen_tk, bg=color) # Crear el botón con la imagen ajustada
     boton_help.image = imagen_tk # mantener una referencia a la imagen
     boton_help.place(x=coord_x, y=coord_y) # ajusta las coordenadas x e y
     ToolTipIzquierda(boton_help, texto_tooltip) # Crear el tooltip para el botón

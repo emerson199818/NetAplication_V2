@@ -1,8 +1,5 @@
 import ctypes 
 
-import Variables #usar funciones y varibles del script Variables.py
-import Wireless_funciones #usar funciones y varibles del script Wireless_funciones.py
-
 def alerta_ok(titulo_ventana, titulo, texto): #esta alerta me muestra un boton de aceptar
 	hwnd = ctypes.windll.user32.FindWindowW(None, titulo_ventana)
 	resultado = ctypes.windll.user32.MessageBoxW(hwnd, texto, titulo, 64)

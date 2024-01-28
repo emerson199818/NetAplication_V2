@@ -67,15 +67,15 @@ def Centro_wireless(frame):
     sub_frame1.pack(side="left", fill="both", expand=True)
 
     # Objectos del subframe 1
-    etiqueta1 = tk.Label(sub_frame1, text="Opciones de Escaneo", bg=Variables.c_centros, font=("Arial", 12, "bold"))
+    etiqueta1 = tk.Label(sub_frame1, text="Opciones de Escaneo", bg=Variables.c_centros, font=(Variables.poppins_negrita, 12))
     etiqueta1.place(x=5, y=5, width=ancho_subframes) 
 
     # Botón para buscar el ComboBox con las interfaces Wi-Fi
-    boton_actualizar = tk.Button(sub_frame1, text="Buscar Interfaces", command=Wireless_scanner.actualizar_combobox)
+    boton_actualizar = tk.Button(sub_frame1, text="Buscar Interfaces", command=Wireless_scanner.actualizar_combobox, font=(Variables.poppins, 9))
     boton_actualizar.place(x=15, y=40)
     Perzonalizacion_botones.selecion_boton(boton_actualizar)
-    Perzonalizacion_botones.boton_ayuda(sub_frame1, 
-    "Presiona 'Buscar interfaces' para buscar las interfaces wifi que tengas actualmente luego presiona el boton de 'Iniciar Escaneo'", 122, 42) 
+    Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame1, 
+    "Presiona 'Buscar interfaces' para buscar las interfaces wifi que tengas actualmente luego presiona el boton de 'Iniciar Escaneo'", 124, 42) 
     
 
     # ComboBox para seleccionar una interfaz Wi-Fi
@@ -86,41 +86,41 @@ def Centro_wireless(frame):
     
     # Botón para iniciar escaneo
     boton_escaneo = tk.Button(sub_frame1, text="Iniciar Escaneo", 
-        command=B_Iniciar_Escaneo)
+        command=B_Iniciar_Escaneo, font=(Variables.poppins, 9))
     boton_escaneo.place(x=15, y=80)
     Perzonalizacion_botones.selecion_boton(boton_escaneo)
-    Perzonalizacion_botones.boton_ayuda(sub_frame1, 
-    "Este botón inicia el escaneo y puede tardar un máximo de 30 segundos. Una vez que haya finalizado, haz clic en 'Actualizar Output'.", 122, 82) 
+    Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame1, 
+    "Este botón inicia el escaneo y puede tardar un máximo de 30 segundos. Una vez que haya finalizado, haz clic en 'Actualizar Output'.", 124, 82) 
     
     # Botón para Actualizar Escaneo
     boton_actualizar = tk.Button(sub_frame1, text="Actualizar OutPut", 
-        command=B_actualizar_output)
+        command=B_actualizar_output, font=(Variables.poppins, 9))
     boton_actualizar.place(x=15, y=120)
     Perzonalizacion_botones.selecion_boton(boton_actualizar)
-    Perzonalizacion_botones.boton_ayuda(sub_frame1, 
-    "Este botón actualiza la salida después de cada escaneo o al importar un archivo.", 122, 122)
+    Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame1, 
+    "Este botón actualiza la salida después de cada escaneo o al importar un archivo.", 124, 122)
 
     # Botón para limpiar output
     boton_limpiar = tk.Button(sub_frame1, text="Limpiar OutPut", 
-        command=B_limpiar_output)
+        command=B_limpiar_output, font=(Variables.poppins, 9))
     boton_limpiar.place(x=15, y=160)
     Perzonalizacion_botones.selecion_boton(boton_limpiar)
-    Perzonalizacion_botones.boton_ayuda(sub_frame1, 
-    "Este botón borra el resultado (Output).", 122, 162)
+    Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame1, 
+    "Este botón borra el resultado (Output).", 124, 162)
     
     #mostrar informacion en texto!
     global total_redes
-    total_redes = tk.Label(sub_frame1, text="", bg=Variables.c_centros)
+    total_redes = tk.Label(sub_frame1, text="", bg=Variables.c_centros, font=(Variables.poppins, 9))
     total_redes.place(x=250 , y=82)
     Wireless_scanner.recuento_escaneados(total_redes)
 
     #mostrar informacion redes mostrada en treeview
-    total_redes_treeview = tk.Label(sub_frame1, text="", bg=Variables.c_centros)
+    total_redes_treeview = tk.Label(sub_frame1, text="", bg=Variables.c_centros, font=(Variables.poppins, 9))
     total_redes_treeview.place(x=250 , y=122)
     Wireless_scanner.recuento(total_redes_treeview, view_data)
 
     #mostrar datos selecionados
-    total_seleccion = tk.Label(sub_frame1, text="", bg=Variables.c_centros)
+    total_seleccion = tk.Label(sub_frame1, text="", bg=Variables.c_centros, font=(Variables.poppins, 9))
     total_seleccion.place(x=250 , y=162)
     Wireless_scanner.obtener_seleccion(view_data, total_seleccion)
 
@@ -134,37 +134,37 @@ def Centro_wireless(frame):
     sub_frame2.pack(side="left", fill="both", expand=True)
 
     #objectos frame 2
-    etiqueta2 = tk.Label(sub_frame2, text="Opciones de Datos", bg=Variables.c_centros, font=("Arial", 12, "bold"))
+    etiqueta2 = tk.Label(sub_frame2, text="Opciones de Datos", bg=Variables.c_centros, font=(Variables.poppins_negrita, 12))
     etiqueta2.place(x=5, y=5, width=ancho_subframes)
 
     # Botón para exportar
     boton_exportar = tk.Button(sub_frame2, text="Exportar Datos", 
-        command=B_exportar_output)
+        command=B_exportar_output, font=(Variables.poppins, 9))
     boton_exportar.place(x=15, y=40)
     Perzonalizacion_botones.selecion_boton(boton_exportar)
-    Perzonalizacion_botones.boton_ayuda(sub_frame2, 
-    "Este botón exporta los datos del output a un archivo Excel para su análisis posterior.", 120, 42)
+    Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame2, 
+    "Este botón exporta los datos del output a un archivo Excel para su análisis posterior.", 124, 42)
 
     # Botón para Importar
-    boton_Importar = tk.Button(sub_frame2, text="Importar Datos", command=B_importar)
+    boton_Importar = tk.Button(sub_frame2, text="Importar Datos", command=B_importar, font=(Variables.poppins, 9))
     boton_Importar.place(x=15, y=80)
     Perzonalizacion_botones.selecion_boton(boton_Importar)
-    Perzonalizacion_botones.boton_ayuda(sub_frame2,
-    "Este botón se utiliza para importar los datos previamente exportados.", 120, 82)
+    Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame2,
+    "Este botón se utiliza para importar los datos previamente exportados.", 124, 82)
 
     # Botón para copiar al portapapeles
-    boton_Seleccionar = tk.Button(sub_frame2, text="Seleccionar Todo", command=B_copar_todo_portapapeles)
+    boton_Seleccionar = tk.Button(sub_frame2, text="Seleccionar Todo", command=B_copar_todo_portapapeles, font=(Variables.poppins, 9))
     boton_Seleccionar.place(x=15, y=120)
     Perzonalizacion_botones.selecion_boton(boton_Seleccionar)
-    Perzonalizacion_botones.boton_ayuda(sub_frame2, 
-    "Este botón sirve para seleccionar todos los datos del output.", 120, 122)
+    Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame2, 
+    "Este botón sirve para seleccionar todos los datos del output.", 124, 122)
 
     # Botón para Copiar Seleccion Al Portapapeles
-    boton_copiar_selec = tk.Button(sub_frame2, text="Copiar Seleccion", command=B_copar_selecion_portapapeles)
+    boton_copiar_selec = tk.Button(sub_frame2, text="Copiar Seleccion", command=B_copar_selecion_portapapeles, font=(Variables.poppins, 9))
     boton_copiar_selec.place(x=15, y=160)
     Perzonalizacion_botones.selecion_boton(boton_copiar_selec)
-    Perzonalizacion_botones.boton_ayuda(sub_frame2, 
-    "Usa 'Ctrl' para copiar un dato o selecciona un rango manteniendo 'Ctrl' y usando 'Shift'. Luego, haz clic en 'Copiar'.", 120, 162)
+    Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame2, 
+    "Usa 'Ctrl' para copiar un dato o selecciona un rango manteniendo 'Ctrl' y usando 'Shift'. Luego, haz clic en 'Copiar'.", 124, 162)
 
     separacion3 = tk.Frame(C_wireless1, bg=Variables.c_lina_separacion, width=5)
     separacion3.pack(side="left", fill="y")
@@ -176,23 +176,23 @@ def Centro_wireless(frame):
     sub_frame3.pack(side="left", fill="both", expand=True)
 
     #objectos frame 3
-    etiqueta3 = tk.Label(sub_frame3, text="Opciones de Filtros", bg=Variables.c_centros, font=("Arial", 12, "bold"))
+    etiqueta3 = tk.Label(sub_frame3, text="Opciones de Filtros", bg=Variables.c_centros, font=(Variables.poppins_negrita, 12))
     etiqueta3.place(x=5, y=5, width=442, height=25)
 
     # Botón para ordenar
-    boton_Ordenar = tk.Button(sub_frame3, text="Ordenar Datos", command=B_ordenar)
+    boton_Ordenar = tk.Button(sub_frame3, text="Ordenar Datos", command=B_ordenar, font=(Variables.poppins, 9))
     boton_Ordenar.place(x=15, y=40)
     Perzonalizacion_botones.selecion_boton(boton_Ordenar)
-    Perzonalizacion_botones.boton_ayuda(sub_frame3, "Ordenar datos del output desde la A - Z.", 125, 42)
+    Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame3, "Ordenar datos del output desde la A - Z.", 125, 42)
 
     # Botón para filtar por señal
-    boton_señal = tk.Button(sub_frame3, text="Intensidad Señal", command=B_ordenar_intensidad)
+    boton_señal = tk.Button(sub_frame3, text="Intensidad Señal", command=B_ordenar_intensidad, font=(Variables.poppins, 9))
     boton_señal.place(x=15, y=80)
     Perzonalizacion_botones.selecion_boton(boton_señal)
-    Perzonalizacion_botones.boton_ayuda_izquierda(sub_frame3, "Filtar datos por Intensidad de señal mas fuerte a mas debil.", 125, 82)
+    Perzonalizacion_botones.boton_ayuda_izquierda(Variables.c_centros, sub_frame3, "Filtar datos por Intensidad de señal mas fuerte a mas debil.", 125, 82)
 
     # Botón para filtrar por Seguridad
-    boton_seguridad = tk.Label(sub_frame3, text="Seguridad", bg=Variables.c_centros) # por ejemplo, WPA2, WPA3
+    boton_seguridad = tk.Label(sub_frame3, text="Seguridad", bg=Variables.c_centros, font=(Variables.poppins)) # por ejemplo, WPA2, WPA3
     boton_seguridad.place(x=15, y=120)
     # Lista de opciones de seguridad
     opciones_seguridad = ["FREE", "WEP", "WPA", "WPA2", "WPA3"]
@@ -200,25 +200,25 @@ def Centro_wireless(frame):
     global combo_seguridad
     combo_seguridad = ttk.Combobox(sub_frame3, textvariable=canal, values=opciones_seguridad)
     combo_seguridad.place(x=100, y=120)
-    Perzonalizacion_botones.boton_ayuda(sub_frame3, "Filtar por tipo de seguridad de la red.", 248, 121)
+    Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame3, "Filtar por tipo de seguridad de la red.", 254, 121)
     
     # Botónes para filtrar por bandas
-    boton_bandas = tk.Label(sub_frame3, text="Bandas", bg=Variables.c_centros) 
+    boton_bandas = tk.Label(sub_frame3, text="Bandas", bg=Variables.c_centros, font=(Variables.poppins)) 
     boton_bandas.place(x=15, y=160)
     # Checkbutton para filtrar por banda
     global var_canal_2
     var_canal_2 = tk.IntVar() # variable para almacenar el estado del checkbox
-    check_canal = tk.Checkbutton(sub_frame3, text="2.4 GHz", variable=var_canal_2, bg=Variables.c_barras)
+    check_canal = tk.Checkbutton(sub_frame3, text="2.4 GHz", variable=var_canal_2, bg=Variables.c_barras, font=(Variables.poppins))
     check_canal.place(x=100, y=160)
     # Checkbutton para filtrar por banda
     global var_canal_5
     var_canal_5 = tk.IntVar() # variable para almacenar el estado del checkbox
-    check_canal = tk.Checkbutton(sub_frame3, text="5 GHz", variable=var_canal_5, bg=Variables.c_barras)
+    check_canal = tk.Checkbutton(sub_frame3, text="5 GHz", variable=var_canal_5, bg=Variables.c_barras, font=(Variables.poppins))
     check_canal.place(x=180, y=160)
-    Perzonalizacion_botones.boton_ayuda_izquierda(sub_frame3, "Filtar por tipo de banda de la red.", 248, 161)
+    Perzonalizacion_botones.boton_ayuda_izquierda(Variables.c_centros, sub_frame3, "Filtar por tipo de banda de la red.", 254, 161)
     
     # Botón para filtrar por canal
-    boton_canal = tk.Label(sub_frame3, text="Canal", bg=Variables.c_centros)
+    boton_canal = tk.Label(sub_frame3, text="Canal", bg=Variables.c_centros, font=(Variables.poppins))
     boton_canal.place(x=15, y=200)
 
     # Lista de números del 1 al 14
@@ -227,13 +227,13 @@ def Centro_wireless(frame):
     canal = tk.StringVar() 
     combo_canal = ttk.Combobox(sub_frame3, textvariable=canal, values=numeros)
     combo_canal.place(x=100, y=200)
-    Perzonalizacion_botones.boton_ayuda_izquierda(sub_frame3, "Filtar por tipo de canal de la red.", 248, 201)
+    Perzonalizacion_botones.boton_ayuda_izquierda(Variables.c_centros, sub_frame3, "Filtar por tipo de canal de la red.", 254, 201)
 
     # Botón para filtar
-    boton_filtar = tk.Button(sub_frame3, text="Aplicar Filtros", command=B_aplicar_filtros)
+    boton_filtar = tk.Button(sub_frame3, text="Aplicar Filtros", command=B_aplicar_filtros, font=(Variables.poppins, 9))
     boton_filtar.place(x=15, y=240)
     Perzonalizacion_botones.selecion_boton(boton_filtar)
-    Perzonalizacion_botones.boton_ayuda_izquierda(sub_frame3, "Una ves seleciones uno o mas filtros aplicalos dando click aqui!.", 102, 242)
+    Perzonalizacion_botones.boton_ayuda_izquierda(Variables.c_centros, sub_frame3, "Una ves seleciones uno o mas filtros aplicalos dando click aqui!.", 102, 242)
 
     keyboard.hook(key_comands.on_key_event)
     

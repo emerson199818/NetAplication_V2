@@ -60,9 +60,9 @@ def cambio_ventana(ventana_factory, frame):
 #####################################
 # Menu boton Monitores
 menu = tk.Menu(Variables.root, tearoff=0)
-menu.add_command(label="WireLess Monitor", command=B_wireless) #se llama a la funcion Wireless
-menu.add_command(label="Battery Monitor") #por hacer
-menu.add_command(label="Ram Monitor") #por hacer
+menu.add_command(label="WireLess Monitor", command=B_wireless, font=(Variables.poppins, 10))#se llama a la funcion Wireless
+menu.add_command(label="Battery Monitor", font=(Variables.poppins, 10)) #por hacer
+menu.add_command(label="Ram Monitor", font=(Variables.poppins, 10)) #por hacer
 
 #########################################################
     #funciones mostrar/ocultar Botones Barra_superior 

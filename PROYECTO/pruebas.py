@@ -1,28 +1,20 @@
-import pyautogui
-import subprocess
-import time
+import tkinter as tk
+from tkinter import font
 
-# Abrir el Panel de control de Windows
-subprocess.Popen('control.exe', shell=True)
-time.sleep(1)  # Esperar a que se abra el Panel de control
 
-# Seleccionar "Sistema y seguridad"
-pyautogui.write('Sistema y seguridad')
-pyautogui.press('enter')
-time.sleep(1)  # Esperar a que se abra la opción "Sistema y seguridad"
+ventana = tk.Tk()
+ventana.title("Estilos de Fuente")
 
-# Seleccionar "Sistema"
-pyautogui.write('Sistema')
-pyautogui.press('enter')
-time.sleep(1)  # Esperar a que se abra la opción "Sistema"
+# Ruta al archivo de la fuente personalizada
+ruta_fuente = "lib/Data/fuente/poppins.ttf"
 
-# Seleccionar "Configuración remota"
-pyautogui.write('Configuración remota')
-pyautogui.press('enter')
-time.sleep(1)  # Esperar a que se abra la opción "Configuración remota"
+# Cargar la fuente personalizada
+fuente_personalizada = font.Font(family="Popins", size=12, weight="bold")
 
-# En la pestaña "Control remoto", seleccionar "Permitir conexiones de asistencia remota a este equipo" y "Permitir conexiones remotas a este equipo"
-# (Aquí es donde el script simularía hacer clic en las casillas correspondientes)
 
-# Cerrar el Panel de control
-pyautogui.hotkey('alt', 'f4')
+# Negrita
+label_negrita = tk.Label(ventana, text="Texto en negrita", font=(fuente_personalizada))
+label_negrita.pack(pady=10)
+
+
+ventana.mainloop()

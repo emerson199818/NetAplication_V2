@@ -14,25 +14,25 @@ def Barra_superior():
 	barra_opcion.pack(side='top', fill='x')
 
 	# Boton Home
-	b_home = tk.Label(barra_opcion, text='Home', bg=Variables.c_barras, width=10) #boton Monitores
+	b_home = tk.Label(barra_opcion, text='Home', bg=Variables.c_barras, width=10, font=(Variables.poppins, 10)) #boton Monitores
 	b_home.pack(side='left', padx=0)
 	b_home.bind("<Button-1>", Menus_funciones.B_home) #accion al hacer click en boton
 	Perzonalizacion_botones.selecion_boton(b_home) #efecto al selecionar boton
 
 	# Boton Monitores
-	b_conexiones = tk.Label(barra_opcion, text='Conexiones', bg=Variables.c_barras, width=10) #boton Monitores
+	b_conexiones = tk.Label(barra_opcion, text='Conexiones', bg=Variables.c_barras, width=10, font=(Variables.poppins, 10)) #boton Monitores
 	b_conexiones.pack(side='left', padx=0)
 	b_conexiones.bind("<Button-1>", Menus_funciones.B_conexiones) #accion al hacer click en boton
 	Perzonalizacion_botones.selecion_boton(b_conexiones) #efecto al selecionar boton
 
 	# Boton Monitores
-	b_scanners = tk.Label(barra_opcion, text='Monitores', bg=Variables.c_barras, width=10) #boton Monitores
+	b_scanners = tk.Label(barra_opcion, text='Monitores', bg=Variables.c_barras, width=10, font=(Variables.poppins, 10)) #boton Monitores
 	b_scanners.pack(side='left', padx=0)
 	b_scanners.bind("<Button-1>", Menus_funciones.mostrar_ocultar_menu) #accion al hacer click en boton
 	Perzonalizacion_botones.selecion_boton(b_scanners) #efecto al selecionar boton
 
 	#boton ayuda
-	b_ayuda = tk.Label(barra_opcion, text='Ayuda', bg=Variables.c_barras, width=10) #boton ayuda
+	b_ayuda = tk.Label(barra_opcion, text='Ayuda', bg=Variables.c_barras, width=10, font=(Variables.poppins, 10)) #boton ayuda
 	Perzonalizacion_botones.selecion_boton(b_ayuda) #efecto al selecionar boton
 	b_ayuda.pack(side='left', padx=0)
 	b_ayuda.bind("<Button-1>", Menus_funciones.B_ayuda) #accion al hacer click en boton
@@ -58,7 +58,7 @@ def Barra_inferior():
 	Net_datos_funciones.verificar_cambio_de_red(etiqueta2) #obtiene y actualiza datos de la red
 
 def on_cerrar_ventana():
-	Net_datos_funciones.eliminar(Variables.Excel_wifi_lleno)
+	Net_datos_funciones.eliminar(Variables.Excel_wifi_lleno) #elimina el archivo que ocontiene el scan del wifi!
 	Variables.root.destroy()  # Cierra la ventana principal
 
 def crear_windows_principal(titulo, icono): #funcion inicia el programa principal! root

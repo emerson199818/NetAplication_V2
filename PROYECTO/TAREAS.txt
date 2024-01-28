@@ -1,3 +1,10 @@
+############# POR HACER #############
+
+#continuar con la int conexiones
+
+#funciones para monitoreo con scoket
+
+# agregar logs, y en las funciones los errores se agreguen como log tambien 'e'
 
 ############# OPCIONES ESCANEO #############
 # LISTO
@@ -47,47 +54,3 @@
 
 	#HACER QUE LA FUNCION COPIAR DATOS DE KEY_COMANDS.PY, SOLO ESTE DISPONIBLE SI LA VENTANA CON EL NOMBRE NETAPLICATIONV2 ESTA ACTIVO, ASI NO PERMITIR QUE CUANDO NO ESTA ACTIVA Y TENGA OTRA VENTANA EN PRIMER PLANO SE PUEDAN COPIAR LOS DATOS DE OUTPUT Y ME DEJE COPIAR LOS DE LA VENTANA QUE ESTA EN PRIMER PLANO!
 	
-############# POR HACER #############
-
-continuar con la int conexiones
-
-leer codigo y documentar!
-
-#funciones para monitoreo con scoket
-
-
-
-
-
-
-################################################
-	para perfil de linkdin
-################################################
-	👋 ¡Hola! Soy Emerson Granda, un apasionado tecnólogo en gestión de redes de datos con un enfoque especializado en desarrollo y programación. Mi experiencia abarca una amplia gama de tecnologías, desde la programación en Python y C++ hasta el despliegue de soluciones en la nube utilizando Docker y Azure.
-
-	💻 Tecnologías y Herramientas:
-
-	Desarrollo en Python y C++ con un énfasis particular en aplicaciones de redes.
-	Experiencia sólida con Docker para facilitar el desarrollo y la implementación eficiente de aplicaciones.
-	Profundo conocimiento de Azure y Azure DevOps para la creación y gestión de proyectos en la nube.
-	Instalación y configuración de servidores tanto en entornos Windows como Unix.
-	🌐 Redes y Windows:
-
-	Tecnólogo en gestión de redes de datos con habilidades probadas en la instalación y configuración de infraestructuras de red.
-	Amplia experiencia en el despliegue y administración de sistemas en entornos Windows.
-	🛡️ Ciberseguridad:
-
-	Conocimientos sólidos en ciberseguridad para garantizar la integridad y seguridad de los sistemas.
-	🔧 Proyectos Destacados:
-
-	[Docker-webPage-game-mysql]: https://github.com/emerson199818/Docker-webPage-game-mysql
-	[Docker_StoreWeb_LAB]: https://github.com/emerson199818/Docker_StoreWeb_LAB
-	[etAplicationV1.0]: https://github.com/emerson199818/NetAplicationV1.0
-	[NetAplication_v1.5]: https://github.com/emerson199818/NetAplication_v1.5
-
-
-	✨ Misión:
-	Apasionado por aprovechar la tecnología para resolver desafíos complejos, mi misión es contribuir al mundo del desarrollo de software y las redes, combinando habilidades técnicas con un enfoque estratégico.
-
-
-
