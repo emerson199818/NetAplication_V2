@@ -7,6 +7,7 @@ import Perzonalizacion_botones
 import Menus_funciones
 import Net_datos_funciones
 import Home_funciones
+import Conexiones_funciones
 
 def Barra_superior():
 	#  BARRA SUPERIOR

@@ -1,49 +1,77 @@
-import scapy.all as scapy
-import socket
-import ipaddress
+class SSHShellUI:
+    def __init__(self, master):
+        self.master = master
 
-def get_local_ip():
-    # Obtiene la dirección IP local del equipo
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(("8.8.8.8", 80))
-    local_ip = s.getsockname()[0]
-    s.close()
-    return local_ip
+        self.text_area = scrolledtext.ScrolledText(master, wrap=tk.WORD, width=80, height=20, bg="black", foreground="green")
+        self.text_area.pack(expand=True, fill="both")
 
-def get_device_name(ip):
-    try:
-        # Realiza la resolución de nombres
-        device_name, _, _ = socket.gethostbyaddr(ip)
-        return device_name
-    except socket.herror:
-        # No se pudo resolver el nombre
-        return None
+        self.etiqueta = tk.Label(master, text="Ingresar comando", foreground="white", background="black", font=("Arial", 10))
+        self.etiqueta.pack(side="left", padx=5, pady=5)
 
-def scan(ip):
-    arp_request = scapy.ARP(pdst=ip)
-    broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
-    arp_request_broadcast = broadcast/arp_request
-    answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
-    
-    clients_list = []
-    for element in answered_list:
-        client_dict = {"ip": element[1].psrc, "mac": element[1].hwsrc}
-        clients_list.append(client_dict)
-    return clients_list
+        self.entry = tk.Entry(master, width=80, font=("Arial", 10), bg="white", foreground="black")
+        self.entry.pack(side="left", padx=5, pady=5)
 
-def main():
-    local_ip = get_local_ip()
-    network_ip = f"{ipaddress.IPv4Network(local_ip, strict=False).network_address}/24"
-    
-    result = scan(network_ip)
-    
-    if result:
-        print("IP, MAC y Nombre de dispositivo en la red:")
-        for client in result:
-            device_name = get_device_name(client['ip'])
-            print(f"IP: {client['ip']}, MAC: {client['mac']}, Nombre: {device_name}")
-    else:
-        print("No se pudieron obtener las IP, MAC y Nombres de dispositivo.")
+        self.clear_button = tk.Button(master, text="Limpiar OutPut", command=self.limpiar_texto, font=("Arial", 10))
+        self.clear_button.pack(side="left", padx=5, pady=5)
 
-if __name__ == "__main__":
-    main()
+        self.entry.bind("<Return>", self.enviar_comando)  # Asociar la tecla Enter a la función enviar_comando
+
+        self.ssh = self.iniciar_sesion_ssh()  # Iniciar la sesión SSH al inicializar la clase
+
+    def iniciar_sesion_ssh(self):
+        try:
+            ssh_client = paramiko.SSHClient()
+            ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh_client.connect('192.168.1.49', port=22, username='kali', password='kali')
+            self.text_area.insert(tk.END, "Conexión SSH establecida.\n", "output")
+            return ssh_client
+        except Exception as e:
+            self.text_area.insert(tk.END, f"Error al establecer conexión SSH: {e}\n")
+            return None
+
+    def ejecutar_comando_interactivo(self, comando):
+        try:
+            if self.ssh:
+                # Abrir un canal "shell" interactivo
+                channel = self.ssh.invoke_shell()
+
+                # Enviar el comando
+                channel.send(comando + '\n')
+
+                # Esperar a que el comando termine
+                while not channel.recv_ready():
+                    pass
+
+                # Recibir y mostrar la salida del comando
+                output = channel.recv(1024).decode()
+                while output:
+                    self.text_area.insert(tk.END, output)
+                    self.text_area.yview(tk.END)
+                    self.text_area.update_idletasks()
+                    output = channel.recv(1024).decode()
+
+                # Cerrar el canal
+                channel.close()
+
+        except Exception as e:
+            self.text_area.insert(tk.END, f"Error al ejecutar comando: {e}\n")
+
+    def enviar_comando(self, event):
+        comando_usuario = self.entry.get()
+        if comando_usuario.lower() == 'exit':
+            self.cerrar_sesion_ssh()
+            self.master.destroy()
+            return
+
+        self.ejecutar_comando_interactivo(comando_usuario)
+        self.entry.delete(0, tk.END)
+
+    def cerrar_sesion_ssh(self):
+        try:
+            if self.ssh is not None and self.ssh.get_transport().is_active():
+                self.ssh.close()
+        except Exception as e:
+            print(f"Error al cerrar la sesión SSH: {e}")
+
+    def limpiar_texto(self):
+        self.text_area.delete(1.0, tk.END)

@@ -1,6 +1,7 @@
 ############# POR HACER #############
 
 #continuar con la int conexiones
+	- agregar Msg en las alertas de conexion y seguir con solucionar lo de la conexion!
 
 #funciones para monitoreo con scoket
 

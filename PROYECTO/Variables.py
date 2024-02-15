@@ -8,10 +8,15 @@ import time #modulo para funciones de tiempo
 import random #modulo para general randoms
 import socket
 import psutil
+from cryptography.fernet import Fernet
+import base64
 
 ##########################
         #FUNCIONES
 ##########################
+
+def generar_clave_maestra():
+    return b'\x9290\xe3,\xf8\xb9j\xd2\xe6\x8aV\x1a\xe0\x8a\xf4z\x0e\xd8\xc9\x90\xad\xef\x9f\xc4\x05o\xd0\x91,\xcf\xd1'
 
 def generar_numero_aleatorio(n1, n2):
     return random.randint(n1, n2)
@@ -94,3 +99,8 @@ selecion_recuento = 0
 ruta_fuente = "lib/Data/fuente/poppins.ttf" # ruta de la fuente poppins
 poppins_negrita = font.Font(family="Popins", weight="bold")
 poppins = font.Font(family="Popins")
+
+#clave maestra
+Clave_maestra = b'\x9290\xe3,\xf8\xb9j\xd2\xe6\x8aV\x1a\xe0\x8a\xf4z\x0e\xd8\xc9\x90\xad\xef\x9f\xc4\x05o\xd0\x91,\xcf\xd1'
+# Codificar en base64 para obtener la clave Fernet válida
+clave_maestra = base64.urlsafe_b64encode(Clave_maestra)
