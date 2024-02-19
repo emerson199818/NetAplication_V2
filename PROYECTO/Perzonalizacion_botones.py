@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 #script con variables
 import Variables
 
+
 #Perzonalizacion selecionar boton
 def selecion_boton(self): #efecto al selecionar boton
     self.bind("<Enter>", lambda event: self.config(bg=Variables.c_s_b))

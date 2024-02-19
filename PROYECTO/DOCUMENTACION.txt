@@ -36,3 +36,6 @@
 
 # Logs:
 	Este script para general logs amedida que se usa la aplicacion!
+
+#Screen_Holdin.py:
+	Este script tiene la ventana de holding que carga antes del programa donde se muestra imagen de incio con datos del usuario!

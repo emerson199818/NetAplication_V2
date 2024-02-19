@@ -10,6 +10,7 @@ import Variables
 import Alertas
 import pyperclip
 import key_comands
+from Logs import agregar_log
 
 def start_resize_linea1(self, _):
     # Almacenar la posición del clic
@@ -35,6 +36,8 @@ def resize_linea1(self, event):
     self.linea1.update()
 
 def Centro_wireless(frame): 
+    Msg = "Se entro a pantalla Wireless_scanner"
+    agregar_log(Msg)
     # Crear el contenedor principal 
     C_wireless1_p = tk.Frame(frame, bg=Variables.c_centros)
     C_wireless1_p.pack(side="top", fill="both", expand=True)
@@ -164,7 +167,7 @@ def Centro_wireless(frame):
     boton_copiar_selec.place(x=15, y=160)
     Perzonalizacion_botones.selecion_boton(boton_copiar_selec)
     Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame2, 
-    "Usa 'Ctrl' para copiar un dato o selecciona un rango manteniendo 'Ctrl' y usando 'Shift'. Luego, haz clic en 'Copiar'.", 124, 162)
+    "Usa 'Ctrl' y mouse, para copiar un dato o selecciona un rango sosteniendo 'Ctrl' o usando 'Shift'. Luego, haz clic en 'Copiar Seleccion', o presionando 'Ctrl + C'.", 124, 162)
 
     separacion3 = tk.Frame(C_wireless1, bg=Variables.c_lina_separacion, width=5)
     separacion3.pack(side="left", fill="y")
@@ -234,6 +237,9 @@ def Centro_wireless(frame):
     boton_filtar.place(x=15, y=240)
     Perzonalizacion_botones.selecion_boton(boton_filtar)
     Perzonalizacion_botones.boton_ayuda_izquierda(Variables.c_centros, sub_frame3, "Una ves seleciones uno o mas filtros aplicalos dando click aqui!.", 102, 242)
+    
+    Msg = "Se cargaron textos, titulos, iconos , botones, y etc de la ventana"
+    agregar_log(Msg)
 
     keyboard.hook(key_comands.on_key_event)
     
@@ -244,43 +250,63 @@ def Centro_wireless(frame):
 #########################
 #BOTONES OPCIONES ESCANEO
 def B_Iniciar_Escaneo():
+    Msg = "Se inicio el escaneo de redes"
+    agregar_log(Msg)
     inter = Wireless_scanner.obtener_indice_int(combo_int)
     interfas_selecionada_combobox = combo_int.get()
     if not interfas_selecionada_combobox:
         Msg = "Por favor, selecciona una interfaz antes de iniciar el escaneo."
         Alertas.alerta_aceptar(Variables.titulo, Variables.alerta_error, Msg)
+        Msg = "Se intento iniciar escaner pero no seleciono interfaz"
+        agregar_log(Msg)
         return
     Msg = "Tenga en cuenta que este escaneo de red puede no ser 100% preciso, ya que depende de factores de SOFTWARE Y HARDWARE del equipo"
     Alertas.alerta_Amarilla(Variables.titulo, Variables.alerta_aviso, Msg)
+    Msg = f"Se detecto la interfaz {interfas_selecionada_combobox}, se inicio el escaneo"
+    agregar_log(Msg)
     Wireless_scanner.scan_wifi(inter) #escanea todas las redes wifi del alcance
 
 def B_actualizar_output():
     Wireless_scanner.actualizar_datos(view_data, Variables.Excel_wifi_lleno)
+    Msg = "Se actualizaron los valores en el output"
+    agregar_log(Msg)
 
 def B_limpiar_output():
     Wireless_scanner.limpiar_datos(view_data)
-
-    #BOTONES OPCIONES DATOS
+    Msg = "Se limpiaron los valores en el output"
+    agregar_log(Msg)
 
 #BOTONES OPCIONES DATOS
 def B_exportar_output():
     Wireless_scanner.exportar_a_excel(Variables.Excel_wifi_lleno, Variables.Excel_wifi_exportado)
+    Msg = "Se se exportaron valores del escaneo wireless"
+    agregar_log(Msg)
 
 def B_importar():
     Wireless_scanner.importar_desde_excel(view_data)
+    Msg = "Se inicio la importacion de un documento con un registro de escaneo externo"
+    agregar_log(Msg)
 
 def B_copar_todo_portapapeles():
     Wireless_scanner.seleccionar_todos_los_elementos(view_data)
+    Msg = "Se copiaron todos los datos al portapapeles"
+    agregar_log(Msg)
 
 def B_copar_selecion_portapapeles():
     Wireless_scanner.copiar_seleccion_al_portapapeles(view_data)
+    Msg = "Se copio la selecion al portapapeles"
+    agregar_log(Msg)
 
 #BOTONES OPCIONES FILTROS
 def B_ordenar():
     Wireless_scanner.ordenar_por_columna(view_data, 0)
+    Msg = "Se ordenaron los datos por nombre de la A - Z"
+    agregar_log(Msg)
 
 def B_ordenar_intensidad():
     Wireless_scanner.ordenar_por_intensidad(view_data)
+    Msg = "Se ordenaron los datos por intensidad de señal"
+    agregar_log(Msg)
 
 def B_aplicar_filtros():
     # Verificar si el Treeview tiene elementos y aplicar filtros
@@ -300,7 +326,11 @@ def B_aplicar_filtros():
 
         if canal_seleccionado:
             Wireless_scanner.aplicar_filtro_canal(view_data, canal_seleccionado)
+        Msg = "se aplicaron filtros del output de redes wireless"
+        agregar_log(Msg)
     else:
         Msg = "No hay datos en el OutPut"
         Alertas.alerta_ok(Variables.titulo, Variables.alerta_aviso, Msg)
+        Msg = "Intento aplicar filtros pero no se detectaton datos en el output"
+        agregar_log(Msg)
         pass

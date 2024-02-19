@@ -4,6 +4,7 @@ import Variables
 import Home_funciones
 import Wireless_funciones
 import Conexiones_funciones
+from Logs import agregar_log
 
 def mostrar_opciones(event):
     global menu_visible
@@ -27,6 +28,8 @@ def mostrar_ocultar_menu(event):
         menu_visible = False
 
 def B_ayuda(event): #boton ayuda habre nueva ventana ayuda
+    Msg = "Se abrio ventana de menu ayuda"
+    agregar_log(Msg)
     Ayuda= tk.Toplevel()
     Ayuda.title("Ayuda") #Titulo
     Ayuda.iconbitmap(Variables.icono_v) #icono
@@ -53,6 +56,8 @@ def cambio_ventana(ventana_factory, frame):
     # Crear un nuevo frame utilizando la función proporcionada
     ventana = ventana_factory(frame)
     ventana.pack(side="top", fill="both", expand=True)
+    Msg = f"se cambio de ventana {frame} a {ventana}"
+    agregar_log(Msg)
 
 
 #####################################

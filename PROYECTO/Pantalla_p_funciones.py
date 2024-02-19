@@ -8,6 +8,7 @@ import Menus_funciones
 import Net_datos_funciones
 import Home_funciones
 import Conexiones_funciones
+from Logs import agregar_log
 
 def Barra_superior():
 	#  BARRA SUPERIOR
@@ -42,6 +43,10 @@ def Barra_superior():
 	b_ayuda = tk.Label(barra_opcion, text=f'{Variables.Host_nombre} / {Variables.nombre_usuario}', bg=Variables.c_barras) #boton ayuda
 	b_ayuda.pack(side='right', padx=10)
 
+	
+	Msg = "Barra superior cargada correctamente"
+	agregar_log(Msg)
+
 def Barra_inferior():
 	# BARRA IINFERIOR
 	barra_estado = tk.Frame(Variables.root, bg=Variables.c_barras)
@@ -58,21 +63,42 @@ def Barra_inferior():
 	etiqueta2.pack(side="left", padx=10)
 	Net_datos_funciones.verificar_cambio_de_red(etiqueta2) #obtiene y actualiza datos de la red
 
+	Msg = "Barra inferior cargada correctamente"
+	agregar_log(Msg)
+
 def on_cerrar_ventana():
 	Net_datos_funciones.eliminar(Variables.Excel_wifi_lleno) #elimina el archivo que ocontiene el scan del wifi!
 	Variables.root.destroy()  # Cierra la ventana principal
 
+def HoldingScreen():
+    Msg = "Inicializando el Screen_Holdin"
+    agregar_log(Msg)
+    subprocess.run(["Screen_Holdin.exe"])
+
 def crear_windows_principal(titulo, icono): #funcion inicia el programa principal! root
+	Msg = "Finalizo el Screen_Holdin correctamente"
+	agregar_log(Msg)
 
 	Variables.root.title(titulo) #Titulo
+	Msg = f"Titulo: {titulo}, aplicado"
+	agregar_log(Msg)
+
 	Variables.root.iconbitmap(icono) #icono
+	Msg = "Icono aplicado"
+	agregar_log(Msg)
+
 	n_alto_p = Variables.alto_p - Variables.barra_tareas #nuevo tamaño ancho para la ventana principal
+	Msg = f"Tamaño ventana: {n_alto_p}, aplicado"
+	agregar_log(Msg)
+
 	Variables.root.geometry(f"{Variables.ancho_p}x{n_alto_p}") #aplicar zise a ventana
 	Variables.root.resizable(0,1) #bloquear tamaño ventana ancho, alto
 	Variables.root.state('zoomed') #abrir la ventana maximizada
+	Msg = "Variables aplicadas correctamente"
+	agregar_log(Msg)
 
 	Net_datos_funciones.obtener_data_net()
-		
+	
 	Barra_superior()
 	Home_funciones.Centro_principal(Variables.root)
 	Barra_inferior()

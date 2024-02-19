@@ -1,11 +1,17 @@
 ############# POR HACER #############
 
-#continuar con la int conexiones
-	- agregar Msg en las alertas de conexion y seguir con solucionar lo de la conexion!
+# LOGS
+- la parte de redes wifi scaner se repite mucho ya que es un bucle quitar esos logs
+-cuando agrege lo de los envios de correos configurarle los logs
+
+#en la parte de wireless, agregar un boton que me habra una ventana nueva grande dividida en frames y subframes donde mostsrare los datos de las redes encontradas en graficas!
+
+# funcion en alguna parte para mostar todos los datos de la red a la que esta conectado
+# funcion para monitorear, donde mostrare una region de dispositivos conectados entre si del socket y dando click en cada dispositivo mostar los datos y graficas de monitoreo de ese sistema.
 
 #funciones para monitoreo con scoket
+- crear una miniapp que se ejecute en segundo plano, en los iconos ocultos, esta app primeroestablecera la conecion socket con la ip del servidor principal, y luego recolectara datos del ordenador cada cierto tiempo, luego enviara estos datos al servidor principal en formato json, luego el servidor recivira los datos los guardara en una carpeta y creara registros y valores con los cuales luego mostar los datos recividos en texto o graficas.
 
-# agregar logs, y en las funciones los errores se agreguen como log tambien 'e'
 
 ############# OPCIONES ESCANEO #############
 # LISTO
@@ -54,4 +60,6 @@
 	# HACER QUE EL SCRIPT DE TEST DE RX Y TX SE EJECUTE EN UN SEGUNDO PLANO Y LUEGO QUE CIERRE EL PROGRAMA SE MATE ESE PROCESO!
 
 	#HACER QUE LA FUNCION COPIAR DATOS DE KEY_COMANDS.PY, SOLO ESTE DISPONIBLE SI LA VENTANA CON EL NOMBRE NETAPLICATIONV2 ESTA ACTIVO, ASI NO PERMITIR QUE CUANDO NO ESTA ACTIVA Y TENGA OTRA VENTANA EN PRIMER PLANO SE PUEDAN COPIAR LOS DATOS DE OUTPUT Y ME DEJE COPIAR LOS DE LA VENTANA QUE ESTA EN PRIMER PLANO!
+
+	#CREAR UNA VENTANA SIN BOTONES SOLO UNA IMAGEN DONDE SE MUESTRE POR UNOS SEGUNOS LA IMAGEN DE INCIO Y EN ELLA SE MUESTRE EL TITULO DE LA APP Y INFORMACION DEL USUARIO
 	

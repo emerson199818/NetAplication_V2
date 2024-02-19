@@ -8,6 +8,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 import Variables
+from Logs import agregar_log
 
 equipo = Variables.host_y_usuario
 

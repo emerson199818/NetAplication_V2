@@ -1,14 +1,14 @@
 import os
-import logging
-from _t_d import fecha_dia, hora
+import logbook
+import Variables
 
-Fecha, Dia = fecha_dia()
-Hora = hora()
+Fecha = Variables.fecha
+Hora = Variables.hora
 
-def configurar_logs(nombre_archivo):
+def configurar_logs(log_doc):
     # Configurar el archivo de logs
-    logging.basicConfig(filename=nombre_archivo, level=logging.INFO, format='%(message)s')
+    logbook.FileHandler(log_doc).push_application()
 
 def agregar_log(mensaje):
     mensaje_completo = f"[{Fecha} {Hora}] - {mensaje}"
-    logging.info(mensaje_completo)
+    logbook.info(mensaje_completo)

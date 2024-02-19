@@ -13,6 +13,7 @@ import shutil
 import Variables #usar funciones y varibles del script Variables.py
 import Alertas #usar funciones y varibles del script Alertas.py
 import Wireless_funciones #usar funciones y varibles del script Wireless_funciones.py
+from Logs import agregar_log
 
 security_dict = {
     0: "FREE",
@@ -35,7 +36,11 @@ def get_band_and_channel_from_frequency(frequency):
 def copiar_archivo(origen, destino): #sin uso aun!
     try:
         shutil.copy(origen, destino)
+        Msg = f"se copio archivo de {origen} a {destino}"
+        agregar_log(Msg)
     except Exception as e:
+        Msg = f"Intento copiar data pero se encontro error: {e}"
+        agregar_log(Msg)
         pass
 
 def guardar_en_excel(datos, ruta_guardado): #crea un excel con datos en fila 2 en adelante
@@ -55,8 +60,12 @@ def guardar_en_excel(datos, ruta_guardado): #crea un excel con datos en fila 2 e
     except Exception as e:
         Msg = f"Error al intentar guardar datos en Excel: {e}"
         Alertas.alerta_error(Variables.titulo, Variables.alerta_error, Msg)
+        Msg = f"Error al intentar guardar datos en Excel: {e}"
+        agregar_log(Msg)
 
 def obtener_interfaces_wifi():
+    Msg = "Se inicio escaneo de interfaces wireless"
+    agregar_log(Msg)
     try:
         wifi = pywifi.PyWiFi()
         interfaces = wifi.interfaces()
@@ -70,7 +79,6 @@ def obtener_interfaces_wifi():
         for iface in interfaces:
             info_interface = {
                 "nombre": iface.name(),
-                # Puedes agregar más información según tus necesidades
             }
             info_interfaces.append(info_interface)
 
@@ -78,12 +86,16 @@ def obtener_interfaces_wifi():
     except Exception as e:
         Msg = f"Error al obtener interfaces Wi-Fi: {e}"
         return [], Alertas.alerta_error(Variables.titulo, Variables.alerta_error, Msg)
+        Msg = f"Error al obtener interfaces Wi-Fi: {e}"
+        agregar_log(Msg)
 
 def actualizar_combobox():
     interfaces, error = obtener_interfaces_wifi()
     if error:
         Msg = f"Error: {error}"
         Alertas.alerta_error(Variables.titulo, Variables.alerta_error, Msg)
+        Msg = f"Error: {error}"
+        agregar_log(Msg)
         return
 
     # Obtener solo los nombres de las interfaces como una tupla
@@ -95,9 +107,13 @@ def actualizar_combobox():
 def obtener_indice_int(combo_interfaz):
     # Obtener el índice seleccionado desde el ComboBox
     iface_seleccionada_index = combo_interfaz.current()
+    Msg = f"se encontro un total de {iface_seleccionada_index} interfaces"
+    agregar_log(Msg)
     return iface_seleccionada_index
 
 def scan_wifi(inter):
+    Msg = f"Se inicio escaneo de redes wifi por la interface {inter}"
+    agregar_log(Msg)
     wifi = pywifi.PyWiFi()
     iface = wifi.interfaces()[inter]
     tiempo_inicio = time.time()  # Obtener el tiempo de inicio
@@ -122,13 +138,19 @@ def scan_wifi(inter):
                     security_description = security_dict.get(security, "N/A") #le asigno un tipo de seguridad con base al diccionario security_dict
                     wifi_list.append((wifi_name, bssid, signal_strength, channel, frequency, band, security_description)) #creo una lista y agrego toda la informacion
                     bssids_seen.add(bssid) #Agrego BSSID a conjunto para evitar duplicados:
+            Msg = f"Se obtuvo informacion de cada red wifi detectada"
+            agregar_log(Msg)
         except Exception as e:
             # Manejar la excepción si ocurre algún error durante el escaneo
             Msg = f"Error al escanear las redes Wi-Fi, es posible que el driver de la interface esté desactivado, actívelo y vuelva a intentar: {e}"
             Opcion = Alertas.alerta_error(Variables.titulo, Variables.alerta_error, Msg)
+            Msg = f"Se obtuvo un erro durante el escaneo de redes wifi {e}"
+            agregar_log(Msg)
             if Opcion == 3:
                 pass
             elif Opcion == 4:
+                Msg = f"Se reintento el escaneo wifi"
+                agregar_log(Msg)
                 Wireless_funciones.B_Iniciar_Escaneo() #reintentar escaneo
             elif Opcion == 5:
                 pass
@@ -144,6 +166,8 @@ def scan_wifi(inter):
         if os.path.exists(Variables.Excel_wifi_lleno):
             #Si existe, eliminarlo
             os.remove(Variables.Excel_wifi_lleno)
+            Msg = f"archivo con data ya existia se eliminio y reemplazo"
+            agregar_log(Msg)
         time.sleep(2)
         #Crear un nuevo libro de trabajo
         libro = openpyxl.Workbook()
@@ -157,14 +181,17 @@ def scan_wifi(inter):
 
         #Guardar el libro de trabajo en el archivo .xlsx
         libro.save(Variables.Excel_wifi_lleno)
-        #Cerrar el libro de trabajo para liberar el archivo
+
         libro.close()
     except Exception as e:
         Msg = f"Error al intentar crear el archivo: {e}"
         Opcion = Alertas.alerta_error(Variables.titulo, Variables.alerta_error, Msg)
+        agregar_log(Msg)
         if Opcion == 3:
             pass
         elif Opcion == 4:
+            Msg = "Se reintento el escaneo"
+            agregar_log(Msg)
             Wireless_funciones.B_Iniciar_Escaneo() #reintentar escaneo
         elif Opcion == 5:
             pass
@@ -192,6 +219,7 @@ def scan_wifi(inter):
 
     Msg = f"El escaneo se completó, presione 'Actualizar OutPut' para visualizar la información"
     Alertas.alerta_ok(Variables.titulo, Variables.alerta_aviso, Msg)
+    agregar_log("Escaneo completado")
 
     return wifi_list
 
@@ -220,6 +248,9 @@ def crear_treeview(frame):
     # Configurar el comportamiento de la barra de desplazamiento
     frame.grid_rowconfigure(0, weight=1)
     frame.grid_columnconfigure(0, weight=1)
+
+    Msg = "Se creo el treeview para visualizar la información"
+    agregar_log(Msg)
 
     return treeview
 
@@ -275,15 +306,21 @@ def actualizar_datos(treeview, nombre_archivo):
         # Ajustar el tamaño de las columnas al contenido
         for idx, col_name in enumerate(columnas, start=1):
             treeview.column(col_name, width=tkFont.Font().measure(col_name))
+        Msg = "Se actualizaron los datos al treeview"
+        agregar_log(Msg)
             
         # Mostrar mensaje cuando el archivo está vacío
         if not os.path.exists(nombre_archivo) or sheet.max_row == 0:
             Msg = "No hay datos que mostrar, realiza el primer escaneo y vuelve a intentarlo."
             Alertas.alerta_aceptar(Variables.titulo, Variables.alerta_aviso, Msg)
+            Msg = "No se encontraron datos por mostrar en el output"
+            agregar_log(Msg)
     except Exception as e:
         # Otro tipo de error, imprimir en consola
         Msg = "No hay datos que mostrar, realiza el primer escaneo y vuelve a intentarlo."
         Alertas.alerta_Amarilla(Variables.titulo, Variables.alerta_aviso, Msg)
+        Msg = f"Ocurrio un error {e}"
+        agregar_log(Msg)
 
 def limpiar_datos(treeview):
     # Verificar si el Treeview tiene elementos
@@ -291,12 +328,17 @@ def limpiar_datos(treeview):
         # Limpiar datos en el Treeview
         for item in treeview.get_children():
             treeview.delete(item)
+            Msg = "Se limpiaron los datos al treeview"
+            agregar_log(Msg)
     else:
         Msg = "No hay datos en el OutPut"
         Alertas.alerta_ok(Variables.titulo, Variables.alerta_aviso, Msg)
+        agregar_log(Msg)
         pass
 
 def exportar_a_excel(datos_existente, nombre_archivo):
+    Msg = "Se inicio la expoertacion de datos"
+    agregar_log(Msg)
     try:
         # Crear un nuevo libro de trabajo
         libro_nuevo = openpyxl.Workbook()
@@ -335,11 +377,16 @@ def exportar_a_excel(datos_existente, nombre_archivo):
         libro_nuevo.close()
         Msg = f"Exportación exitosa a {nombre_archivo}"
         Alertas.alerta_ok(Variables.titulo, Variables.alerta_aviso, Msg)
+        agregar_log(Msg)
     except Exception as e:
         Msg = f"Error al intentar exportar datos, realize primero un escaneo:"
         Alertas.alerta_Amarilla(Variables.titulo, Variables.alerta_error, Msg)
+        Msg = f"Error al intentar exportar datos {e}"
+        agregar_log(Msg)
 
 def importar_desde_excel(treeview):
+    Msg = "Se inicio la importacion de datos"
+    agregar_log(Msg)
     try:
         # Abrir el explorador de archivos para seleccionar el archivo .xlsx
         archivo_excel = filedialog.askopenfilename(filetypes=[("Archivos Excel", "*.xlsx")])
@@ -368,10 +415,12 @@ def importar_desde_excel(treeview):
 
         Msg = "Importación exitosa"
         Alertas.alerta_ok(Variables.titulo, Variables.alerta_aviso, Msg)
+        agregar_log(Msg)
         time.sleep(Variables.Tiempo)
     except Exception as e:
         Msg = f"Error al intentar importar datos desde Excel: {e}"
         Alertas.alerta_Amarilla(Variables.titulo, Variables.alerta_error, Msg)
+        agregar_log(Msg)
 
 def ordenar_por_columna(treeview, columna):
     # Verificar si el Treeview tiene elementos
