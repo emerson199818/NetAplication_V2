@@ -9,12 +9,13 @@ build_exe_options = {
         "tkinter", "ctypes", "datetime", "os", "getpass",
         "time", "random", "socket", "psutil", "speedtest",
         "keyboard", "subprocess", "re", "PIL", "pandas", "pyperclip", "pywifi", "openpyxl",
-        "shutil", "openpyxl.styles", "base64", "json", "paramiko", "telnetlib3", "sys",
+        "shutil", "openpyxl.styles", "base64", "json", "paramiko", "telnetlib3", "telnetlib", "sys",
         "cryptography"
     ],
     "include_files": [
-        ("lib/Data", "lib/data"),
-        ("lib/Emulator", "lib/Emulator")
+        ("lib/data", "lib/data"),
+        ("lib/Emulator", "lib/Emulator"),
+        ("lib/Screen_Holdin.exe", "lib/Screen_Holdin.exe")
     ]
 }
 

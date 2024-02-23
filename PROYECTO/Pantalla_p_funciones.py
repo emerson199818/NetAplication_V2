@@ -73,7 +73,7 @@ def on_cerrar_ventana():
 def HoldingScreen():
     Msg = "Inicializando el Screen_Holdin"
     agregar_log(Msg)
-    subprocess.run(["Screen_Holdin.exe"])
+    subprocess.run(["lib/Screen_Holdin.exe"])
 
 def crear_windows_principal(titulo, icono): #funcion inicia el programa principal! root
 	Msg = "Finalizo el Screen_Holdin correctamente"
