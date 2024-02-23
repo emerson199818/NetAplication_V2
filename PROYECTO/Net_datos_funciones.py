@@ -21,44 +21,35 @@ def eliminar(archivo1): #funcion reutilizable para borrar cualquier archivo
 
 def escanear(): #esta funcion ejecuta un comando ipconfig /all para sacar toda la infomacion en un archivo texto, datos que luego usare coo varibales
     # Ejecutar el comando 'ipconfig /all' y capturar la salida
-    Msg = "Obtencion de data red iniciado"
-    agregar_log(Msg)
-
     resultado = subprocess.run(['ipconfig', '/all'], capture_output=True, text=True)
     resultado1 = subprocess.run(['netsh', 'wlan', 'show', 'interfaces'], capture_output=True, text=True)
     
     # Guardar la salida en un archivo de texto resultado
     with open("lib/data/temp/netp", 'w') as archivo:
         archivo.write(resultado.stdout)
-        Msg = "Datos #1 optenidos"
-        agregar_log(Msg)
 
     # Guardar la salida en un archivo de texto resultado1
     with open(Variables.conexion, 'w') as archivo:
         archivo.write(resultado1.stdout)
-        Msg = "Datos #2 optenidos"
-        agregar_log(Msg)
 
 def eliminar_antes_de(): #funcion elimina cualquier cadena de caracteres que este antes del texto pasado como titulo
-    # Leer el archivo procesado
+    #Leer el archivo procesado
     with open("lib/data/temp/netp", 'r') as archivo:
         lineas = archivo.readlines()
 
     try:
-        # Encontrar la línea que contiene el título para Ethernet
+        #Encontrar la línea que contiene el título para Ethernet
         indice_titulo_eth = None
         for i, linea in enumerate(lineas):
             if titulo in linea:
                 indice_titulo_eth = i
                 break
 
-        # Conservar solo las líneas después del título y guardar el resultado en un nuevo archivo
+        #Conservar solo las líneas después del título y guardar el resultado en un nuevo archivo
         lineas_limpas_eth = lineas[indice_titulo_eth:]
 
         with open("lib/data/temp/eth_temp", 'w') as archivo_limpiado_eth:
             archivo_limpiado_eth.writelines(lineas_limpas_eth)
-        Msg = f"Algunos archivos se corrigeron para su lectura"
-        agregar_log(Msg)
     except:
         Msg = f"ocurrio un error durante la correcion de archivos Ethernet"
         agregar_log(Msg)
@@ -76,8 +67,6 @@ def eliminar_antes_de(): #funcion elimina cualquier cadena de caracteres que est
 
         with open(Variables.wire, 'w') as archivo_limpiado_wireless:
             archivo_limpiado_wireless.writelines(lineas_limpas_wireless)
-        Msg = f"Algunos archivos se corrigeron para su lectura"
-        agregar_log(Msg)
     except:
         Msg = f"ocurrio un error durante la correcion de archivos Wireless"
         agregar_log(Msg)
@@ -100,8 +89,6 @@ def eliminar_despues(): #funcion elimina cualquier texto despues del nombre del 
 
         with open(Variables.eth, 'w') as archivo_limpiado:
             archivo_limpiado.writelines(lineas_limpas)
-        Msg = f"Algunos archivos se corrigeron para su lectura"
-        agregar_log(Msg)
     except:
         Msg = f"Error al procesar el título para el archivo {i+1}"
         agregar_log(Msg)
@@ -111,8 +98,6 @@ def obtener_variable(archivo, titulo): #aqui se lee el documentos del output del
         for linea in f:
             if titulo in linea:
                 valor = linea.split(':')[-1].strip()
-                Msg = f"Se obtuvo un valor: {valor} de una varibale"
-                agregar_log(Msg)
                 return valor
 
 def buscar_direccion_ip(eth, wire, conexion): #aqui se saca varios datos de estos archivos, ip, ssid, estado etc etc!
@@ -136,8 +121,6 @@ def buscar_direccion_ip(eth, wire, conexion): #aqui se saca varios datos de esto
             # Obtener el nombre de la red desde la salida de PowerShell
             Variables.net_ssid = resultado_powershell.stdout.strip()
 
-            Msg = f"Se obtuvo nombre de la red mediante ethernet: {Variables.net_ssid}"
-            agregar_log(Msg)
         except subprocess.CalledProcessError as e:
             Msg = f"Error al obtener el nombre de la red: {e}"
             agregar_log(Msg)
@@ -173,8 +156,6 @@ def buscar_direccion_ip(eth, wire, conexion): #aqui se saca varios datos de esto
             if Variables.v_dns.isspace() or not Variables.v_dns:
                 # La variable está vacía o contiene solo espacios en blanco, asignar "N/A"
                 Variables.v_dns = "N/A"
-            Msg = f"Se detecto conexion por {Variables.drive}"
-            agregar_log(Msg)
         else:
             Variables.D_ip = "127.0.0.1"
             Variables.drive = "N/A"
@@ -190,13 +171,9 @@ def obtener_ip(): #aqui se obtiene la ip actual, para luego verificar si cambio 
     try:
         # Obtener el nombre del host
         host_name = socket.gethostname()
-        Msg = f"Se detecto nombre del host: {host_name}"
-        agregar_log(Msg)
 
         # Obtener la dirección IP del host
         ip_address = socket.gethostbyname(host_name)
-        Msg = f"Se detecto ip del host: {ip_address}"
-        agregar_log(Msg)
 
         return ip_address
 
@@ -207,17 +184,11 @@ def obtener_ip(): #aqui se obtiene la ip actual, para luego verificar si cambio 
         return Variables.D_ip
 
 def verificar_cambio_de_red(etiqueta): #aqui se actualizan los datos despues de que se desconecta o conecta a una nueva red
-    Msg = f"Se inicio verificacion cambio de red"
-    agregar_log(Msg)
     obtener_data_net()
     nueva_ip = obtener_ip()
-    Msg = f"Se detecto nueva ip de red: {nueva_ip}"
-    agregar_log(Msg)
     if nueva_ip != Variables.D_ip:
         buscar_direccion_ip(Variables.eth, Variables.wire, Variables.conexion)
         Variables.D_ip = nueva_ip
-        Msg = f"Se efectuo el cambio: {Variables.D_ip}"
-        agregar_log(Msg)
     else:
         pass
 
@@ -225,8 +196,6 @@ def verificar_cambio_de_red(etiqueta): #aqui se actualizan los datos despues de 
     texto = f"Dns: {Variables.v_dns}     User: {Variables.nombre_usuario}     Estado: {Variables.net_stado}     Señal: {Variables.v_señal}     Canal: {Variables.v_canal}     Adaptador: {Variables.drive}     Nombre: {Variables.net_ssid}     Ip: {Variables.D_ip}     Rx = ({Variables.v_recepcion}) Mbps     Tx = ({Variables.v_transmision}) Mbps"
     etiqueta.config(text=texto)
     etiqueta.after(5000, lambda: verificar_cambio_de_red(etiqueta))
-    Msg = f"se actualizo la inf red"
-    agregar_log(Msg)
 
 def obtener_data_net(): #se pone todo a funcionar
     Msg = "Obtencion de data inicada"

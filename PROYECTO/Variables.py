@@ -28,7 +28,7 @@ def obtener_fecha_hora(etiqueta):
     cadena_fecha_hora = fecha_hora_actual.strftime("%Y-%m-%d    %I:%M %p")
     etiqueta.config(text=cadena_fecha_hora)
     
-    # Programar la próxima actualización después de 60,000 milisegundos (1 minuto)
+    # Programar la próxima actualización después de un tiempo en milisegundos
     etiqueta.after(1500, lambda: obtener_fecha_hora(etiqueta))
 
 ##########################

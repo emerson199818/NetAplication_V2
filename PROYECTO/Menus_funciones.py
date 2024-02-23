@@ -1,10 +1,35 @@
 import tkinter as tk
+import os
 
 import Variables
 import Home_funciones
 import Wireless_funciones
 import Conexiones_funciones
 from Logs import agregar_log
+
+menu_visible = False #inicializar menu como falso
+
+def crear_folders(nombre, ruta):
+    # Verificar si la ruta existe
+    if not os.path.exists(ruta):
+        Msg = f"la ruta: {ruta} existe"
+        agregar_log(Msg)
+        return
+    
+    # Combinar la ruta con el nombre del folder
+    ruta_completa = os.path.join(ruta, nombre)
+    
+    # Verificar si el folder ya existe en la ruta
+    if os.path.exists(ruta_completa):
+        Msg = f"El folder: {ruta_completa} ya existe en la ruta especificada."
+        agregar_log(Msg)
+    else:
+        # Crear el folder si no existe
+        try:
+            os.mkdir(ruta_completa)
+        except OSError:
+            Msg = "Error al intentar crear el folder en la ruta especificada."
+            agregar_log(Msg)
 
 def mostrar_opciones(event):
     global menu_visible
@@ -19,10 +44,10 @@ def mostrar_opciones(event):
 def mostrar_ocultar_menu(event):
     global menu_visible
 
-    # Si el menú no está visible, lo mostramos
+    # Si el menú no está visible, se mostramos
     if not menu_visible:
         mostrar_opciones(event)
-    # Si el menú está visible, no lo mostramos
+    # Si el menú está visible, no se mostramos
     else:
         menu.unpost()
         menu_visible = False
@@ -53,7 +78,7 @@ def cambio_ventana(ventana_factory, frame):
     for widget in frame.winfo_children():
         widget.destroy()
 
-    # Crear un nuevo frame utilizando la función proporcionada
+    # Crear un nuevo frame utilizando la nueva ventana
     ventana = ventana_factory(frame)
     ventana.pack(side="top", fill="both", expand=True)
     Msg = f"se cambio de ventana {frame} a {ventana}"
@@ -68,9 +93,3 @@ menu = tk.Menu(Variables.root, tearoff=0)
 menu.add_command(label="WireLess Monitor", command=B_wireless, font=(Variables.poppins, 10))#se llama a la funcion Wireless
 menu.add_command(label="Battery Monitor", font=(Variables.poppins, 10)) #por hacer
 menu.add_command(label="Ram Monitor", font=(Variables.poppins, 10)) #por hacer
-
-#########################################################
-    #funciones mostrar/ocultar Botones Barra_superior 
-#########################################################
-
-menu_visible = False #inicializar menu como falso

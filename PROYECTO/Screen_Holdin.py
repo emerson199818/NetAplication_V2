@@ -31,20 +31,20 @@ def mostrar_imagen_con_texto():
 
     # Cargar la imagen y cambiar su tamaño
     imagen = Image.open('lib/Data/loading.png')
-    imagen = imagen.resize((300, 300))  # Cambia el tamaño de la imagen (ajusta según necesites)
+    imagen = imagen.resize((300, 300))
     draw = ImageDraw.Draw(imagen)
     # Agregar texto a la imagen
     texto = "NetAplication V2"
-    font = ImageFont.truetype("lib/Data/fuente/poppins.ttf", 20)  # Puedes ajustar el tipo de fuente y el tamaño
-    draw.text((75, 180), texto, fill="black", font=font)  # Ajusta la posición del texto según necesites
+    font = ImageFont.truetype("lib/Data/fuente/poppins.ttf", 20)
+    draw.text((75, 180), texto, fill="black", font=font)
 
     texto = "Cargando..."
-    font = ImageFont.truetype("lib/Data/fuente/poppins.ttf", 20)  # Puedes ajustar el tipo de fuente y el tamaño
-    draw.text((100, 210), texto, fill="black", font=font)  # Ajusta la posición del texto según necesites
+    font = ImageFont.truetype("lib/Data/fuente/poppins.ttf", 20)
+    draw.text((100, 210), texto, fill="black", font=font)
 
     texto = host_y_usuario
-    font = ImageFont.truetype("lib/Data/fuente/poppins.ttf", 10)  # Puedes ajustar el tipo de fuente y el tamaño
-    draw.text((75, 270), texto, fill="black", font=font)  # Ajusta la posición del texto según necesites
+    font = ImageFont.truetype("lib/Data/fuente/poppins.ttf", 10)
+    draw.text((75, 270), texto, fill="black", font=font)
 
     # Crear una referencia global a img en la ventana principal
     root.img = ImageTk.PhotoImage(imagen)
@@ -52,7 +52,7 @@ def mostrar_imagen_con_texto():
     panel = tk.Label(root, image=root.img)
     panel.pack()
 
-    root.after(tiempo_espera, root.destroy)  # Cierra la ventana después de 3 segundos (ajusta el tiempo según necesites)
+    root.after(tiempo_espera, root.destroy) cerrar ventana despues de tiempo_espera
     root.mainloop()
 
 if __name__ == "__main__":

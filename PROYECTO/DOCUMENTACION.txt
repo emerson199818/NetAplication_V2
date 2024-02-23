@@ -39,3 +39,6 @@
 
 #Screen_Holdin.py:
 	Este script tiene la ventana de holding que carga antes del programa donde se muestra imagen de incio con datos del usuario!
+
+#Conexiones_funciones.py:
+	Este script contiene todas las funciones necesarias para la ventana de conexiones!

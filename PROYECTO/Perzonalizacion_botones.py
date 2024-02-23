@@ -66,7 +66,7 @@ class ToolTipIzquierda(object):
         self.tw = tk.Toplevel(self.widget)
         self.tw.wm_overrideredirect(True)
         # Colocar la ventana del tooltip a la izquierda del botón
-        self.tw.wm_geometry(f"+{x - 200}+{y}") # ajusta '200' según el tamaño de tu tooltip
+        self.tw.wm_geometry(f"+{x - 200}+{y}") #ajustar '200' según el tamaño de tu tooltip
         label = tk.Label(self.tw, text=self.text, background="#ffffff", relief='solid', borderwidth=1, wraplength = 180)
         label.pack(ipadx=1)
 

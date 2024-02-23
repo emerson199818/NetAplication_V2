@@ -13,17 +13,15 @@ import key_comands
 from Logs import agregar_log
 
 def start_resize_linea1(self, _):
-    # Almacenar la posición del clic
+
     self.start_x_linea1 = _.x_root
 
-    # Almacenar la posición actual de la línea de separación en C_wireless1
     self.start_sash_linea1 = self.linea1.sash_coord(0)
 
-    # Configurar el evento de movimiento para ajustar el tamaño
     self.C_wireless1.bind("<B1-Motion>", self.resize_linea1)
 
 def resize_linea1(self, event):
-    # Calcular la cantidad de desplazamiento del ratón
+    #desplazamiento del ratón
     delta_x = event.x_root - self.start_x_linea1
 
     # Calcular la nueva posición de la línea de separación en C_wireless1

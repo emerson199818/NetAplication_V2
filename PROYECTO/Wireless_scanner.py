@@ -43,25 +43,32 @@ def copiar_archivo(origen, destino): #sin uso aun!
         agregar_log(Msg)
         pass
 
-def guardar_en_excel(datos, ruta_guardado): #crea un excel con datos en fila 2 en adelante
-    try: 
-        #Verificar si el archivo ya existe
-        if not os.path.exists(Variables.Excel_wifi_lleno):
-            # Crear un nuevo libro de trabajo
-            nuevo_libro = openpyxl.Workbook()
-            nueva_hoja = nuevo_libro.active
+def guardar_en_excel(datos, ruta_guardado):
+    try:
+        # Verificar si el archivo ya existe
+        if os.path.exists(ruta_guardado):
+            # Eliminar el archivo existente
+            os.remove(ruta_guardado)
+            Msg = f"El archivo {ruta_guardado} ya existe y ha sido eliminado."
+            agregar_log(Msg)
 
-            # Escribir los datos en el nuevo libro, comenzando desde la fila 2
-            for fila in datos:
-                nueva_hoja.append(fila)
+        time.sleep(2)
+        # Crear un nuevo libro de trabajo
+        nuevo_libro = openpyxl.Workbook()
+        nueva_hoja = nuevo_libro.active
 
-            # Guardar el nuevo libro en la ruta especificada
-            nuevo_libro.save(ruta_guardado)
+        # Escribir los datos en el nuevo libro, comenzando desde la fila 2
+        for fila in datos:
+            nueva_hoja.append(fila)
+
+        # Guardar el nuevo libro en la ruta
+        nuevo_libro.save(ruta_guardado)
+        Msg = f"Los datos han sido guardados en {ruta_guardado}."
+        agregar_log(Msg)
     except Exception as e:
         Msg = f"Error al intentar guardar datos en Excel: {e}"
-        Alertas.alerta_error(Variables.titulo, Variables.alerta_error, Msg)
-        Msg = f"Error al intentar guardar datos en Excel: {e}"
         agregar_log(Msg)
+        Alertas.alerta_error(Variables.titulo, Variables.alerta_error, Msg)
 
 def obtener_interfaces_wifi():
     Msg = "Se inicio escaneo de interfaces wireless"
@@ -172,7 +179,7 @@ def scan_wifi(inter):
         #Crear un nuevo libro de trabajo
         libro = openpyxl.Workbook()
 
-        #Seleccionar la hoja activa (por defecto, es la primera hoja)
+        #Seleccionar la hoja activa
         hoja = libro.active
         
         #Agregar datos a la hoja
@@ -204,15 +211,14 @@ def scan_wifi(inter):
 
     sheet = book.active #Seleccionar la hoja activa
 
-    alignment = Alignment(horizontal='center') # Crear un objeto de alineación para centrar el texto
+    alignment = Alignment(horizontal='center')
 
-    font = Font(color=Color(rgb="000000")) # Crear un objeto de fuente para cambiar el color del texto (por ejemplo, a rojo)
-
-    for row in sheet.iter_rows(): # Iterar sobre las celdas en la primera fila (las celdas del encabezado)
+    font = Font(color=Color(rgb="000000")) 
+    for row in sheet.iter_rows(): 
         for cell in row:
-            cell.alignment = alignment # Centrar el texto
+            cell.alignment = alignment 
 
-            cell.font = font # Cambiar el color del texto
+            cell.font = font
 
     # Guardar el libro de trabajo
     book.save(Variables.Excel_wifi_lleno)
@@ -268,10 +274,8 @@ def copiar_seleccion_al_portapapeles(selft):
         valores_elemento = selft.item(elemento, "values")
         datos_a_copiar.append("\t".join(map(str, valores_elemento)))
 
-    # Crear una cadena con los datos seleccionados
     datos_copiados = "\n".join(datos_a_copiar)
 
-    # Copiar la cadena al portapapeles
     pyperclip.copy(datos_copiados)
     Msg = "Datos copiados al portapapeles."
     Alertas.alerta_ok(Variables.titulo, Variables.alerta_aviso, Msg)
@@ -399,7 +403,8 @@ def importar_desde_excel(treeview):
         for item in treeview.get_children():
             treeview.delete(item)
 
-        # Lista para almacenar los datos
+        #almacenar los datos
+        global datos
         datos = []
 
         # Agregar datos al Treeview, omitiendo la primera fila con los nombres de las columnas
@@ -436,7 +441,7 @@ def ordenar_por_columna(treeview, columna):
 
         # Insertar los elementos ordenados en el Treeview
         for _, item in elementos:
-            # Insertar los elementos en las columnas respectivas
+            # Insertar los elementos en las columnas
             treeview.insert("", "end", values=_)
     else:
         Msg = "No hay datos en el OutPut"
@@ -446,18 +451,13 @@ def ordenar_por_columna(treeview, columna):
 def ordenar_por_intensidad(treeview):
     # Verificar si el Treeview tiene elementos
     if treeview.get_children():
-        # Obtener los elementos del Treeview y aplicar filtro
         elementos = [(treeview.item(item, "values"), item) for item in treeview.get_children()]
 
-        # Ordenar los elementos por el valor de la columna "SEÑAL" (columna 2)
         elementos.sort(key=lambda x: int(x[0][2]) if x[0] and x[0][2] else 0)
 
-        # Limpiar el Treeview
         treeview.delete(*treeview.get_children())
 
-        # Insertar los elementos ordenados en el Treeview
         for _, item in elementos:
-            # Insertar los elementos en las columnas respectivas
             treeview.insert("", "end", values=_)
     else:
         Msg = "No hay datos en el OutPut"

@@ -11,6 +11,7 @@ import json
 import re
 import time
 import subprocess
+import telnetlib
 
 import Variables
 import Perzonalizacion_botones
@@ -26,7 +27,7 @@ MAX_PERFILES = 5
 def Centro_conexiones(frame): 
     Msg = "Entro a pantalla de conexiones"
     agregar_log(Msg)
-    # Crear el contenedor principal 
+    # contenedor principal 
     C_conexiones_p = tk.Frame(frame, bg=Variables.c_centros)
     C_conexiones_p.pack(side="top", fill="both", expand=True)
 
@@ -199,7 +200,7 @@ def limpiar_casillas():# Función para limpiar todas las casillas de entrada
     host_ip = host_ip_entry.get()
     usuario = usuario_entry.get()
     password = password_entry.get()
-    # Verificar si todos los campos están completosor
+    # Verificar si todos los campos están completos
     if perfil or dispositivo or protocolo or puerto or host_ip or usuario or password:
         Perfil_entry.delete(0, tk.END)
         Puerto_entry.delete(0, tk.END)
@@ -219,7 +220,7 @@ def guardar_datos_cifrados(perfil, dispositivo, protocolo, puerto, host_ip, usua
     agregar_log(Msg)
     cifrador = Fernet(clave_maestra)
 
-    # Crear un diccionario con los datos
+    # diccionario con datos a guardar
     datos_dict = {
         "perfil": perfil,
         "dispositivo": dispositivo,
@@ -230,7 +231,7 @@ def guardar_datos_cifrados(perfil, dispositivo, protocolo, puerto, host_ip, usua
         "password": password
     }
 
-    # Convertir el diccionario a una cadena JSON
+    # diccionarion a JSON
     datos_json = json.dumps(datos_dict)
 
     # Cifrar los datos
@@ -249,27 +250,22 @@ def importar_desde_bin():
         # Abrir el explorador de archivos para seleccionar el archivo .bin
         archivo_bin = filedialog.askopenfilename(filetypes=[("Archivos Binarios", "*.bin")])
 
-        # Asegúrate de que la clave sea de 32 bytes
         if len(Variables.Clave_maestra) != 32:
             raise ValueError("La clave maestra debe ser de 32 bytes")
 
-        # Codificar en base64 para obtener la clave Fernet válida
-        clave_maestra_codificada = base64.urlsafe_b64encode(Variables.Clave_maestra)
+        clave_maestra_codificada = base64.urlsafe_b64encode(Variables.Clave_maestra) # Codificar en base64 para obtener la clave Fernet válida
 
-        # Crear el objeto Fernet con la clave codificada
-        cifrador = Fernet(clave_maestra_codificada)
+        cifrador = Fernet(clave_maestra_codificada) # Crear el objeto Fernet con la clave codificada
 
-        # Leer datos cifrados desde el archivo
+        # Leer datos
         with open(archivo_bin, 'rb') as file:
             datos_cifrados = file.read()
 
-        # Descifrar los datos
-        datos_descifrados = cifrador.decrypt(datos_cifrados)
+        datos_descifrados = cifrador.decrypt(datos_cifrados) # decodificar datos
 
-        # Convertir los datos desde formato JSON a un diccionario
-        datos_dict = json.loads(datos_descifrados.decode('utf-8'))
-
-        # Obtener valores del diccionario
+        datos_dict = json.loads(datos_descifrados.decode('utf-8')) #JSON a diccionario
+ 
+        # Obtener valores
         perfil = datos_dict.get('perfil', '')
         dispositivo = datos_dict.get('dispositivo', '')
         protocolo = datos_dict.get('protocolo', '')
@@ -344,17 +340,29 @@ def limpiar_perfiles():
         Msg = "Se limpiaron los perfiles de conexiones"
         agregar_log(Msg)
 
-def start_ssh_session_putty(host, username, password):
-    Msg = "Inicio una conexion de administracion por el modulo putty"
-    agregar_log(Msg)
-    # Ruta completa al ejecutable PuTTY
-    putty_path = r'lib\Emulator\putty.exe'
+def start_ssh_or_telnet(host, username, password, protocolo, port):
+    if protocolo == "Ssh":
+        Msg = "Inicio una conexion de administracion por el modulo putty"
+        agregar_log(Msg)
+        # Ruta completa al ejecutable PuTTY
+        putty_path = r'lib\Emulator\putty.exe'
 
-    # Construir el comando para iniciar la sesión SSH en PuTTY
-    putty_command = f'{putty_path} -ssh {username}@{host} -pw {password}'
+        # Construir el comando para iniciar la sesión SSH en PuTTY
+        putty_command = f'{putty_path} -ssh {username}@{host} -pw {password}'
 
-    # Ejecutar PuTTY con el comando SSH
-    subprocess.run(putty_command, shell=True)
+        # Ejecutar PuTTY con el comando
+        subprocess.run(putty_command, shell=True)
+    elif protocolo == "Telnet":
+        Msg = "Inicio una conexión de administración por el modulo putty usando Telnet"
+        agregar_log(Msg)
+        # Ruta completa al ejecutable PuTTY
+        putty_path = r'lib\Emulator\putty.exe'
+
+        # Construir el comando para iniciar la sesión Telnet en PuTTY
+        putty_command = f'{putty_path} -telnet {host} -P {port}'
+
+        # Ejecutar PuTTY con el comando
+        subprocess.run(putty_command, shell=True)
 
 def cargar_imagen_dispositivo(dispositivo):
     ruta_imagen = None
@@ -375,12 +383,14 @@ def cargar_imagen_dispositivo(dispositivo):
     else:
         return None
 
-def conectar():
+def conectar(): #cuando de clic en boton conectar me crea el perfil en hosts
     Msg = "presiono en boton conectar, creando una sesion en el recuadro de Hosts"
     agregar_log(Msg)
     perfil = Perfil_entry.get()
     dispositivo = combo_dispositivos.get()
+    global protocolo
     protocolo = combo_Protocolo.get()
+    global puerto
     puerto = Puerto_entry.get()
     host_ip = host_ip_entry.get()
     usuario = usuario_entry.get()
@@ -389,7 +399,7 @@ def conectar():
     # Verificar si todos los campos están completos
     if perfil and dispositivo and protocolo and puerto and host_ip and usuario and password:
         if len(lista_etiquetas_perfiles) >= MAX_PERFILES:
-            # Si ya hay 5 perfiles, mostrar un mensaje de error y salir de la función
+            # Si ya hay 5 perfiles, mostrar un mensaje de error y salir de la funcion
             Msg = "Se ha alcanzado el número máximo de perfiles (5)."
             Alertas.alerta_Amarilla(Variables.titulo, Variables.alerta_aviso, Msg)
             return
@@ -414,7 +424,7 @@ def conectar():
             Perzonalizacion_botones.selecion_boton(Boton_consulta)
 
         def b_admin():
-            start_ssh_session_putty(host_ip, usuario, password)
+            start_ssh_or_telnet(host_ip, usuario, password, protocolo, puerto)
             elecion.destroy()
 
         def b_sonsulta():
@@ -437,7 +447,7 @@ def conectar():
                 widget.destroy()
 
             # Crear una nueva instancia de SSHShellUI
-            instancia_ssh_actual = SSHShellUI(C_conexiones2, perfil, host_ip, usuario, password)
+            instancia_ssh_actual = SSHShellUI(C_conexiones2, perfil, protocolo, puerto, host_ip, usuario, password)
 
         # Mostrar el nombre único del perfil junto con la dirección IP y el usuario en sub_frame3
         nombre_perfil = f"{perfil}-{host_ip}-{usuario}"
@@ -481,12 +491,14 @@ def conectar():
 def actualizar_lista_etiquetas():
     # Posicionar la lista de etiquetas en una posición específica dentro del sub_frame3
     for i, etiqueta_perfil in enumerate(lista_etiquetas_perfiles):
-        etiqueta_perfil.place(x=30, y=40 + (i * 30), width=300)
+        etiqueta_perfil.place(x=30, y=40 + (i * 30), width=400)
 
 class SSHShellUI:
-    def __init__(self, master, perfil, host_ip, usuario, password):
+    def __init__(self, master, perfil, protocolo, puerto, host_ip, usuario, password):
         self.master = master
         self.perfil = perfil
+        self.protocolo = protocolo
+        self.puerto = puerto
         self.host_ip = host_ip
         self.usuario = usuario
         self.password = password
@@ -504,8 +516,12 @@ class SSHShellUI:
 
         self.entry.bind("<Return>", self.enviar_comando)  # Asociar la tecla Enter a la función enviar_comando
 
-        # Establecer conexión SSH al iniciar la instancia
-        self.ssh_client = self.iniciar_sesion_ssh()
+        if protocolo == "Ssh":
+            self.cliente = self.iniciar_sesion_ssh()
+        elif protocolo == "Telnet":
+            self.cliente = self.iniciar_sesion_telnet()
+        else:
+            self.cliente = None
 
     def iniciar_sesion_ssh(self):
         try:
@@ -518,19 +534,31 @@ class SSHShellUI:
             self.text_area.insert(tk.END, f"Error al establecer conexión SSH: {e}\n")
             return None
 
+    def iniciar_sesion_telnet(self):
+        try:
+            telnet_client = telnetlib.Telnet(self.host_ip, self.puerto)
+            self.text_area.insert(tk.END, f"Conexión Telnet establecida en el puerto {self.puerto}.\n", "output")
+            return telnet_client
+        except Exception as e:
+            self.text_area.insert(tk.END, f"Error al establecer conexión Telnet: {e}\n")
+            return None
+
+
     def ejecutar_comando(self, comando):
-        if not self.ssh_client:
-            self.text_area.insert(tk.END, "No se pudo establecer conexión SSH.\n", "error")
+        if not self.cliente:
+            self.text_area.insert(tk.END, f"No se pudo establecer conexión {self.protocolo}.\n", "error")
             return
 
         try:
-            # Ejecutar el comando
-            stdin, stdout, stderr = self.ssh_client.exec_command(comando)
-            
-            # Leer y mostrar la salida del comando
-            output = stdout.read().decode()
-            error = stderr.read().decode()
-            
+            if self.protocolo == "SSH":
+                stdin, stdout, stderr = self.cliente.exec_command(comando)
+                output = stdout.read().decode()
+                error = stderr.read().decode()
+            elif self.protocolo == "Telnet":
+                self.cliente.write(comando.encode('ascii') + b'\n')
+                output = self.cliente.read_until(b'#', timeout=1).decode('ascii')
+                error = ""
+
             if output:
                 self.text_area.insert(tk.END, output)
             if error:

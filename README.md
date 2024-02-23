@@ -9,6 +9,29 @@
     Home:
 
     Conexiones: 
+        Muy util y seguro con encriptacion de datos y perfiles a la hora de crear la conexion ssh o telnet en tus sistemas, y equipos activos, modo administracion y modo consulta.
+
+        - Este programa posee funciones de conexion SSH y telnet por el momento.
+        - Funciones de crear perfil.
+        - Exportar un perfil con formato encriptado.
+        - Importar un perfil guardado.
+        - Limpiar formulario de campos y limpiar registro de perfiles cargados.
+
+        - Dispositivos:
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/c_6.PNG)
+
+        - Establecer conexion:
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/c_7.PNG)
+
+        - Hosts:
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/c_10.PNG)
+
+           - Modos conexion:
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/c_11.PNG)
+
+        - Conexion extablecida test:
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/c_12.PNG)
+   ![ICONO](https://github.com/emerson199818/NetAplication_V2/blob/main/PROYECTO/DIAGRAMAS/Capturas/c_13.PNG)
 
     Monitores:
     	Wireless Monitor:
