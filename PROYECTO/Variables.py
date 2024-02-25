@@ -104,3 +104,5 @@ poppins = font.Font(family="Popins")
 Clave_maestra = b'\x9290\xe3,\xf8\xb9j\xd2\xe6\x8aV\x1a\xe0\x8a\xf4z\x0e\xd8\xc9\x90\xad\xef\x9f\xc4\x05o\xd0\x91,\xcf\xd1'
 # Codificar en base64 para obtener la clave Fernet válida
 clave_maestra = base64.urlsafe_b64encode(Clave_maestra)
+
+networks = "lib/networks.json" #variable de la ruta del archivo con los datos de las networks

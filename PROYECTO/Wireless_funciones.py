@@ -5,6 +5,7 @@ import time
 import keyboard
 
 import Wireless_scanner
+import Graficas_funciones
 import Perzonalizacion_botones
 import Variables
 import Alertas
@@ -167,6 +168,14 @@ def Centro_wireless(frame):
     Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame2, 
     "Usa 'Ctrl' y mouse, para copiar un dato o selecciona un rango sosteniendo 'Ctrl' o usando 'Shift'. Luego, haz clic en 'Copiar Seleccion', o presionando 'Ctrl + C'.", 124, 162)
 
+    # Botón para graficar datos
+    boton_copiar_selec = tk.Button(sub_frame2, text="Graficar Datos", command=Graficas_funciones.Barra_superior, font=(Variables.poppins, 9))
+    boton_copiar_selec.place(x=15, y=200)
+    Perzonalizacion_botones.selecion_boton(boton_copiar_selec)
+    Perzonalizacion_botones.boton_ayuda(Variables.c_centros, sub_frame2, 
+    "Este botón muestra en graficos los datos que actual se encuentran en el OutPut", 124, 202)
+
+
     separacion3 = tk.Frame(C_wireless1, bg=Variables.c_lina_separacion, width=5)
     separacion3.pack(side="left", fill="y")
 
@@ -266,6 +275,7 @@ def B_Iniciar_Escaneo():
 
 def B_actualizar_output():
     Wireless_scanner.actualizar_datos(view_data, Variables.Excel_wifi_lleno)
+    Wireless_scanner.guardar_datos_en_json(view_data)
     Msg = "Se actualizaron los valores en el output"
     agregar_log(Msg)
 
@@ -282,6 +292,7 @@ def B_exportar_output():
 
 def B_importar():
     Wireless_scanner.importar_desde_excel(view_data)
+    Wireless_scanner.guardar_datos_en_json(view_data)
     Msg = "Se inicio la importacion de un documento con un registro de escaneo externo"
     agregar_log(Msg)
 
@@ -294,6 +305,8 @@ def B_copar_selecion_portapapeles():
     Wireless_scanner.copiar_seleccion_al_portapapeles(view_data)
     Msg = "Se copio la selecion al portapapeles"
     agregar_log(Msg)
+
+#def B_graficar_datos_treeview():
 
 #BOTONES OPCIONES FILTROS
 def B_ordenar():
@@ -326,6 +339,8 @@ def B_aplicar_filtros():
             Wireless_scanner.aplicar_filtro_canal(view_data, canal_seleccionado)
         Msg = "se aplicaron filtros del output de redes wireless"
         agregar_log(Msg)
+
+        Wireless_scanner.guardar_datos_en_json(view_data)
     else:
         Msg = "No hay datos en el OutPut"
         Alertas.alerta_ok(Variables.titulo, Variables.alerta_aviso, Msg)

@@ -9,6 +9,7 @@ from tkinter import font as tkFont #modulo para la personalizacion widgets
 import time #modulo para funciones de tiempo
 import pyperclip
 import shutil
+import json
 
 import Variables #usar funciones y varibles del script Variables.py
 import Alertas #usar funciones y varibles del script Alertas.py
@@ -185,6 +186,8 @@ def scan_wifi(inter):
         #Agregar datos a la hoja
         for fila in wifi_list:
             hoja.append(fila)
+
+
 
         #Guardar el libro de trabajo en el archivo .xlsx
         libro.save(Variables.Excel_wifi_lleno)
@@ -557,3 +560,31 @@ def obtener_seleccion(treeview, etiqueta):
     etiqueta.config(text=texto)
     tiempo_espera = 2000  # tiempo en actualizar los datos
     etiqueta.after(tiempo_espera, lambda: obtener_seleccion(treeview, etiqueta))
+
+
+def guardar_datos_en_json(treeview):
+    #toma los datos del treeview y los guarda en un json
+    nombre_archivo = "lib/networks.json"
+    # Obtener todas las columnas del Treeview
+    columnas = treeview['columns']
+
+    # Obtener todos los datos del Treeview
+    datos = []
+    for item in treeview.get_children():
+        fila = []
+        for col in columnas:
+            fila.append(treeview.item(item, 'values')[columnas.index(col)])
+        datos.append(fila)
+
+    # Crear un diccionario donde cada clave es el nombre de la columna
+    # y los valores son las listas de datos correspondientes
+    datos_dict = {}
+    for idx, col in enumerate(columnas):
+        datos_dict[col] = [fila[idx] for fila in datos]
+
+    # Guardar los datos en un archivo JSON
+    with open(nombre_archivo, 'w') as json_file:
+        json.dump(datos_dict, json_file, indent=4)
+
+    Msg = "Se actualizo la lista de datos de networks a graficar"
+    agregar_log(Msg)

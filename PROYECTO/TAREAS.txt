@@ -2,9 +2,6 @@
 # LOGS
 -cuando agrege logs de los envios de correos configurarle los logs
 
-#en la parte de wireless, agregar un boton que me habra una ventana nueva grande dividida en frames y subframes donde mostsrare los datos de las redes encontradas en graficas!
-
-# funcion en alguna parte para mostar todos los datos de la red a la que esta conectado
 # funcion para monitorear, donde mostrare una region de dispositivos conectados entre si del socket y dando click en cada dispositivo mostar los datos y graficas de monitoreo de ese sistema.
 
 #funciones para monitoreo con scoket
@@ -62,4 +59,6 @@
 	#CREAR UNA VENTANA SIN BOTONES SOLO UNA IMAGEN DONDE SE MUESTRE POR UNOS SEGUNOS LA IMAGEN DE INCIO Y EN ELLA SE MUESTRE EL TITULO DE LA APP Y INFORMACION DEL USUARIO
 
 	#CREAR UNA FUNCION PARA REGISTRAR LOGS DURANTE LA EJECUION DELPROGRAMA!
+
+	#CREAR UNA FUNCION DONDE MOSTRAR GRAFICAS CON BASE A LAS REDES DEL ESCANEO WIFI Y EN LA PARTE DEL ESCANEO CREAR BOTON QUE ME LLAME ESTA FUNCION DE GRAFICAS, TAMBIEN PONER QUE SE PUEDA TOMAR CAPTURA Y GUARDARLA!
 	

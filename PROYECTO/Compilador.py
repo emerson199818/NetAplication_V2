@@ -10,7 +10,7 @@ build_exe_options = {
         "time", "random", "socket", "psutil", "speedtest",
         "keyboard", "subprocess", "re", "PIL", "pandas", "pyperclip", "pywifi", "openpyxl",
         "shutil", "openpyxl.styles", "base64", "json", "paramiko", "telnetlib3", "telnetlib", "sys",
-        "cryptography"
+        "cryptography", "matplotlib", "numpy"
     ],
     "include_files": [
         ("lib/data", "lib/data"),

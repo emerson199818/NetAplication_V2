@@ -23,7 +23,6 @@ instancia_ssh_actual = None
 lista_etiquetas_perfiles = []
 MAX_PERFILES = 5
 
-
 def Centro_conexiones(frame): 
     Msg = "Entro a pantalla de conexiones"
     agregar_log(Msg)

@@ -84,7 +84,6 @@ def cambio_ventana(ventana_factory, frame):
     Msg = f"se cambio de ventana {frame} a {ventana}"
     agregar_log(Msg)
 
-
 #####################################
     #Sub menu boton Monitores 
 #####################################
