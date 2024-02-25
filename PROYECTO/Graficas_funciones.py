@@ -1,6 +1,6 @@
 import tkinter as tk
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 import matplotlib.pyplot as plt
 import json
 import numpy as np
@@ -15,31 +15,14 @@ import Menus_funciones
 from Logs import agregar_log
 import Alertas
 
-ventana = None
 menu_visible = False
 
-nombre_grafica = None
-grafica_actual = None
-
-def guardar_grafica(nombre, fig):
-    try:
-        desktop_dir = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-        file_path = os.path.join(desktop_dir, nombre)
-        fig.savefig(file_path, dpi=100)
-
-        Msg = 'Éxito', f'La gráfica se ha guardado en: {file_path}'
-        Alertas.alerta_ok(Variables.titulo, Variables.alerta_aviso, Msg)
-    except Exception as e:
-        Msg = f'Error al guardar la gráfica: {str(e)}'
-        agregar_log(Msg)
-        Alertas.alerta_error("NetAplication V2 - Graficos NetWorks", alerta_error, Msg)
+ventana = None
+frame_centro = None
 
 def grafico_señal(frame):
     Msg = "Entro a ver grafico por señal"
     agregar_log(Msg)
-    global nombre_grafica
-    global grafica_actual
-    nombre_grafica = "señal"
 
     # Leer los datos del archivo JSON
     datos = leer_datos_json()
@@ -55,8 +38,6 @@ def grafico_señal(frame):
     fig = Figure(figsize=(8, 6), facecolor='#FFFFFF') 
     ax = fig.add_subplot(111)
     ax.invert_yaxis()
-
-    grafica_actual = fig
 
     # Graficar las señales como una línea con un color más oscuro
     puntos, = ax.plot(señales, marker='o', color='#375F82', linestyle='--')
@@ -84,6 +65,20 @@ def grafico_señal(frame):
     widget_grafico_actual = FigureCanvasTkAgg(fig, master=frame)
     widget_grafico_actual.draw()
     widget_grafico_actual.get_tk_widget().pack(expand=True, fill=tk.BOTH)
+
+    # Crear la barra de herramientas
+    toolbar = NavigationToolbar2Tk(widget_grafico_actual, frame)
+
+    # Ocultar todos los botones excepto "Guardar"
+    toolbar.update()
+    for tool in toolbar.winfo_children():
+        if isinstance(tool, tk.Button) and "Save" not in tool.cget('text'):
+            tool.pack_forget()
+
+    # Configurar manualmente el tamaño de la barra de herramientas
+    toolbar.pack(side=tk.LEFT, padx=0, pady=0, anchor='center', expand=False)
+    toolbar.pack_propagate(False)  # Evita que la barra de herramientas cambie de tamaño automáticamente
+    toolbar.config(width=250, height=30)  # Establece el ancho y alto de la barra de herramientas
 
     return frame
 
@@ -119,7 +114,7 @@ def grafico_frecuencia(frame):
     frecuencia_values = list(frecuencia_count.values())
 
     # Crear una figura de Matplotlib con un tamaño más alto
-    fig = Figure(figsize=(8, 10))  # Ajusta el tamaño aquí
+    fig = Figure(figsize=(7, 6))  # Ajusta el tamaño aquí
     ax = fig.add_subplot(111)
 
     grafica_actual = fig
@@ -128,8 +123,8 @@ def grafico_frecuencia(frame):
     bars = ax.bar(frecuencia_labels, frecuencia_values, color='skyblue')
 
     # Definir los valores específicos para las marcas en el eje y
-    y_max = max(frecuencia_values) + 40  # Incrementa el límite superior en 30
-    y_ticks = list(range(1, y_max, 2))  # Crear una secuencia de 0 a y_max con un paso de 10
+    y_max = max(frecuencia_values) + 30  # Incrementa el límite superior en 30
+    y_ticks = list(range(1, y_max, 5))  # Crear una secuencia de 0 a y_max con un paso de 10
     y_max = max(frecuencia_values)
 
     # Agregar los nombres de las redes al lado de las barras
@@ -174,6 +169,20 @@ def grafico_frecuencia(frame):
     widget_grafico_actual = FigureCanvasTkAgg(fig, master=frame)
     widget_grafico_actual.draw()
     widget_grafico_actual.get_tk_widget().pack(expand=True, fill=tk.BOTH)
+
+    # Crear la barra de herramientas
+    toolbar = NavigationToolbar2Tk(widget_grafico_actual, frame)
+
+    # Ocultar todos los botones excepto "Guardar"
+    toolbar.update()
+    for tool in toolbar.winfo_children():
+        if isinstance(tool, tk.Button) and "Save" not in tool.cget('text'):
+            tool.pack_forget()
+
+    # Configurar manualmente el tamaño de la barra de herramientas
+    toolbar.pack(side=tk.LEFT, padx=0, pady=0, anchor='center', expand=False)
+    toolbar.pack_propagate(False)  # Evita que la barra de herramientas cambie de tamaño automáticamente
+    toolbar.config(width=250, height=30)  # Establece el ancho y alto de la barra de herramientas
 
     return frame
 
@@ -230,6 +239,20 @@ def grafico_banda(frame):
     widget_grafico_actual = FigureCanvasTkAgg(fig, master=frame)
     widget_grafico_actual.draw()
     widget_grafico_actual.get_tk_widget().pack(expand=True, fill=tk.BOTH)
+
+    # Crear la barra de herramientas
+    toolbar = NavigationToolbar2Tk(widget_grafico_actual, frame)
+
+    # Ocultar todos los botones excepto "Guardar"
+    toolbar.update()
+    for tool in toolbar.winfo_children():
+        if isinstance(tool, tk.Button) and "Save" not in tool.cget('text'):
+            tool.pack_forget()
+
+    # Configurar manualmente el tamaño de la barra de herramientas
+    toolbar.pack(side=tk.LEFT, padx=0, pady=0, anchor='center', expand=False)
+    toolbar.pack_propagate(False)  # Evita que la barra de herramientas cambie de tamaño automáticamente
+    toolbar.config(width=250, height=30)  # Establece el ancho y alto de la barra de herramientas
 
     return frame
 
@@ -297,6 +320,20 @@ def grafico_canales(frame):
     widget_grafico_actual.draw()
     widget_grafico_actual.get_tk_widget().pack(expand=True, fill=tk.BOTH)
 
+    # Crear la barra de herramientas
+    toolbar = NavigationToolbar2Tk(widget_grafico_actual, frame)
+
+    # Ocultar todos los botones excepto "Guardar"
+    toolbar.update()
+    for tool in toolbar.winfo_children():
+        if isinstance(tool, tk.Button) and "Save" not in tool.cget('text'):
+            tool.pack_forget()
+
+    # Configurar manualmente el tamaño de la barra de herramientas
+    toolbar.pack(side=tk.LEFT, padx=0, pady=0, anchor='center', expand=False)
+    toolbar.pack_propagate(False)  # Evita que la barra de herramientas cambie de tamaño automáticamente
+    toolbar.config(width=250, height=30)  # Establece el ancho y alto de la barra de herramientas
+
     return frame
 
 def grafico_senal_vs_canal(frame):
@@ -344,6 +381,20 @@ def grafico_senal_vs_canal(frame):
     widget_grafico_actual.draw()
     widget_grafico_actual.get_tk_widget().pack(expand=True, fill=tk.BOTH)
 
+    # Crear la barra de herramientas
+    toolbar = NavigationToolbar2Tk(widget_grafico_actual, frame)
+
+    # Ocultar todos los botones excepto "Guardar"
+    toolbar.update()
+    for tool in toolbar.winfo_children():
+        if isinstance(tool, tk.Button) and "Save" not in tool.cget('text'):
+            tool.pack_forget()
+
+    # Configurar manualmente el tamaño de la barra de herramientas
+    toolbar.pack(side=tk.LEFT, padx=0, pady=0, anchor='center', expand=False)
+    toolbar.pack_propagate(False)  # Evita que la barra de herramientas cambie de tamaño automáticamente
+    toolbar.config(width=250, height=30)  # Establece el ancho y alto de la barra de herramientas
+
     return frame
 
 def etiquetar_banda(frecuencia):
@@ -364,13 +415,12 @@ def leer_datos_json():
 def Barra_superior():
     Msg = "Entro a pantalla graficos"
     agregar_log(Msg)
-    global ventana
+    global ventana, barra_opcion, frame_centro
     ventana = tk.Toplevel()
     ventana.title("NetAplication V2 - Graficos NetWorks")
     
     ventana.state('zoomed')
 
-    global barra_opcion
     barra_opcion = tk.Frame(ventana, bg="white")
     barra_opcion.pack(side='top', fill='x')
 
@@ -380,13 +430,6 @@ def Barra_superior():
     b_senal.bind("<Button-1>", mostrar_ocultar_menu) #accion al hacer click en boton
     Perzonalizacion_botones.selecion_boton(b_senal)
 
-    # Botón captura
-    b_captura = tk.Label(barra_opcion, text='Guardar Captura', bg=Variables.c_barras, font=(Variables.poppins, 10))
-    b_captura.pack(side='right', padx=10)
-    b_captura.bind("<Button-1>", captura) #accion al hacer click en boton
-    Perzonalizacion_botones.selecion_boton(b_captura)
-
-    global frame_centro
     frame_centro = tk.Frame(ventana, bg="white")
     frame_centro.pack(side="left", fill="both", expand=True)
     
@@ -400,9 +443,6 @@ def cerrar_ventana(): #solo cerrar la ventana con el titulo que quiero
         ventana.destroy()
 
 #BOTONES
-def captura(event):
-    guardar_grafica(nombre_grafica, grafica_actual)
-
 def b_grafico_señal():
     Menus_funciones.cambio_ventana(grafico_señal, frame_centro)
 

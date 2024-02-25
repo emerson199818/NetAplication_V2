@@ -1,4 +1,7 @@
 ############# POR HACER #############
+
+HACER NUEVO BUILD Y PROBAR GRAFICOS
+
 # LOGS
 -cuando agrege logs de los envios de correos configurarle los logs
 
